@@ -3,17 +3,27 @@ package model;
 
 public abstract class Ingredient {
 
+    private int id;
     private String name;
     private double price;
     private int stock;
     private int min;
     private int max;
-    public Ingredient(String name, double price, int stock, int min, int max) {
+    public Ingredient(int id, String name, double price, int stock, int min, int max) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.stock = stock;
         this.min = min;
         this.max = max;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

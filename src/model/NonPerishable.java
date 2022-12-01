@@ -4,9 +4,9 @@ public class NonPerishable extends Ingredient {
 
     private String companyName;
 
-    public NonPerishable(String name, double price, int stock,
+    public NonPerishable(int id, String name, double price, int stock,
                          int min, int max, String companyName) {
-        super(name, price, stock, min, max);
+        super(id, name, price, stock, min, max);
         this.companyName = companyName;
     }
 

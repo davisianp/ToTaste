@@ -3,8 +3,6 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.Objects;
-
 public class Inventory {
     private static final ObservableList<Ingredient> ALL_INGREDIENTS = FXCollections.observableArrayList();
     private static final ObservableList<Recipe> ALL_RECIPES = FXCollections.observableArrayList();
@@ -17,11 +15,11 @@ public class Inventory {
         ALL_RECIPES.add(recipe);
     }
 
-    /*public static Ingredient lookupIngredient(int recipeId) {
+    public static Ingredient lookupIngredient(int recipeId) {
         ObservableList<Ingredient> allIngredients = Inventory.getAllIngredients();
 
         for (Ingredient searchedForIngredient : allIngredients) {
-            if (recipeId == searchedForIngredient.getName()) {
+            if (recipeId == searchedForIngredient.getId()) {
                 return searchedForIngredient;
             }
         }
@@ -38,8 +36,6 @@ public class Inventory {
         }
         return null;
     }
-
-     */
 
     public static ObservableList<Ingredient> lookupIngredient(String ingredientName) {
         ObservableList<Ingredient> ingredientNames = FXCollections.observableArrayList();
@@ -63,10 +59,10 @@ public class Inventory {
         return recipeNames;
     }
 
-    public static void updateIngredient(String searchName, Ingredient ingredient) {
+    public static void updateIngredient(int index, Ingredient ingredient) {
         ObservableList<Ingredient> allIngredients = Inventory.getAllIngredients();
         for (Ingredient searchedForIngredient : allIngredients) {
-            if (Objects.equals(searchName, searchedForIngredient.getName())) {
+            if (index == searchedForIngredient.getId()) {
                 allIngredients.remove(searchedForIngredient);
                 allIngredients.add(ingredient);
                 break;
@@ -101,7 +97,7 @@ public class Inventory {
         return ALL_RECIPES;
     }
 
-    /* public static int findNewIngredientId() {
+    public static int findNewIngredientId() {
         int maxId = -1;
         ObservableList<Ingredient> allIngredients = Inventory.getAllIngredients();
 
@@ -112,8 +108,6 @@ public class Inventory {
         }
         return maxId + 1;
     }
-
-     */
 
     public static int findNewRecipeId() {
         int maxId = -1;
@@ -128,11 +122,11 @@ public class Inventory {
     }
 
     private static void addTestData() {
-        Perishable cap = new Perishable("Capacitive Diractors", 12.50, 12, 10, 20, 117);
+        Perishable cap = new Perishable(1, "Capacitive Diractors", 12.50, 12, 10, 20, 117);
         Inventory.addIngredient(cap);
-        NonPerishable mod = new NonPerishable("Modial Reluctors", 112.99, 10, 5, 15, "Dodge");
+        NonPerishable mod = new NonPerishable(2, "Modial Reluctors", 112.99, 10, 5, 15, "Dodge");
         Inventory.addIngredient(mod);
-        NonPerishable fam = new NonPerishable("Famulated Amulite", 89.99, 15, 15, 30, "Rockwell");
+        NonPerishable fam = new NonPerishable(3, "Famulated Amulite", 89.99, 15, 15, 30, "Rockwell");
         Inventory.addIngredient(fam);
         Recipe enc = new Recipe(1001, "Encabulator", 31200.50, 3, 1, 5);
         Inventory.addRecipe(enc);

@@ -97,11 +97,11 @@ public class MainController implements Initializable {
         if(selectedIngredient == null)
             return;
 
-        Alert sureDeleteIngredient = new Alert(Alert.AlertType.CONFIRMATION);
-        sureDeleteIngredient.setTitle("Ingredients");
-        sureDeleteIngredient.setHeaderText("Delete Ingredient: " + selectedIngredient.getName() + "?");
-        sureDeleteIngredient.setContentText("Do you want to delete this ingredient?");
-        Optional<ButtonType> confirm = sureDeleteIngredient.showAndWait();
+        Alert sureDeletePart = new Alert(Alert.AlertType.CONFIRMATION);
+        sureDeletePart.setTitle("Parts");
+        sureDeletePart.setHeaderText("Delete Part ID " + selectedIngredient.getId() + "?");
+        sureDeletePart.setContentText("Do you want to delete this part?");
+        Optional<ButtonType> confirm = sureDeletePart.showAndWait();
 
         if (confirm.isPresent() && confirm.get() == ButtonType.CANCEL) {
             return;
@@ -164,7 +164,7 @@ public class MainController implements Initializable {
                 Alert associatedPartProductError = new Alert(Alert.AlertType.ERROR);
                 associatedPartProductError.setTitle("Product Associated Part Error");
                 associatedPartProductError.setHeaderText("The product, ID " + selectedRecipe.getId() + ", has a part associated with it");
-                associatedPartProductError.setContentText("Please remove required ingredient: " + requiredIngredient.getName() +
+                associatedPartProductError.setContentText("Please remove associated part ID " + requiredIngredient.getId() +
                         "\nfrom the product before attempting to delete this product.\n" +
                         "Products with associated parts cannot be deleted.");
                 associatedPartProductError.showAndWait();
@@ -187,7 +187,7 @@ public class MainController implements Initializable {
 
         ObservableList<Ingredient> ingredients = Inventory.lookupIngredient(searchString);
         if (ingredients.size() == 0){
-            /*try {
+            try {
                 int searchInt = Integer.parseInt(searchString);
                 Ingredient searchIngredient = Inventory.lookupIngredient(searchInt);
                 if (searchIngredient != null) {
@@ -197,9 +197,9 @@ public class MainController implements Initializable {
                     errorPartBox.setText("Cannot find part ID number");
                 }
             }
-            catch(NumberFormatException e) {*/
+            catch(NumberFormatException e) {
                 errorPartBox.setText("Part not found");
-            //}
+            }
         }
         inventoryPartTable.setItems(ingredients);
     }
@@ -210,7 +210,7 @@ public class MainController implements Initializable {
 
         ObservableList<Recipe> recipes = Inventory.lookupRecipe(searchString);
         if (recipes.size() == 0) {
-            /*try {
+            try {
                 int searchInt = Integer.parseInt(searchString);
                 Recipe searchRecipe = Inventory.lookupRecipe(searchInt);
                 if (searchRecipe != null) {
@@ -220,9 +220,9 @@ public class MainController implements Initializable {
                     errorProductBox.setText("Cannot find product ID number");
                 }
             }
-            catch(NumberFormatException e) {*/
+            catch(NumberFormatException e) {
                 errorProductBox.setText("Product not found");
-            //}
+            }
         }
         inventoryProductTable.setItems(recipes);
     }

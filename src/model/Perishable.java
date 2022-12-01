@@ -4,9 +4,9 @@ public class Perishable extends Ingredient {
 
     private int machineId;
 
-    public Perishable(String name, double price, int stock,
+    public Perishable(int id, String name, double price, int stock,
                       int min, int max, int machineId) {
-        super(name, price, stock, min, max);
+        super(id, name, price, stock, min, max);
         this.machineId = machineId;
     }
 

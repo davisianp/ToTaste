@@ -85,9 +85,9 @@ public class AddRecipeController implements Initializable {
             return;
 
         Alert sureDeleteAssociatedPart = new Alert(Alert.AlertType.CONFIRMATION);
-        sureDeleteAssociatedPart.setTitle("Required Ingredients");
+        sureDeleteAssociatedPart.setTitle("Associated Parts");
         sureDeleteAssociatedPart.setHeaderText("Delete Associated Part ID " +
-                selectedIngredient.getName() + "?");
+                selectedIngredient.getId() + "?");
         sureDeleteAssociatedPart.setContentText("Do you want to delete this part?");
         Optional<ButtonType> confirm = sureDeleteAssociatedPart.showAndWait();
 
@@ -187,7 +187,7 @@ public class AddRecipeController implements Initializable {
 
         ObservableList<Ingredient> ingredients = Inventory.lookupIngredient(searchString);
         if (ingredients.size() == 0){
-            /*try {
+            try {
                 int searchInt = Integer.parseInt(searchString);
                 Ingredient searchIngredient = Inventory.lookupIngredient(searchInt);
                 if (searchIngredient != null) {
@@ -195,10 +195,10 @@ public class AddRecipeController implements Initializable {
                 }else {
                     errorBox.setText("Cannot find part ID number");
                 }
-            }*/
-            //catch(NumberFormatException e) {
+            }
+            catch(NumberFormatException e) {
                 errorBox.setText("Part not found");
-            //}
+            }
         }
         allPartsTable.setItems(ingredients);
     }
