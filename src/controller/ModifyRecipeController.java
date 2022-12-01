@@ -119,7 +119,7 @@ public class ModifyRecipeController implements Initializable {
         Alert sureDeleteAssociatedPart = new Alert(Alert.AlertType.CONFIRMATION);
         sureDeleteAssociatedPart.setTitle("Associated Parts");
         sureDeleteAssociatedPart.setHeaderText("Delete Associated Part ID " +
-                selectedIngredient.getId() + "?");
+                selectedIngredient.getName() + "?");
         sureDeleteAssociatedPart.setContentText("Do you want to delete this part?");
         Optional<ButtonType> confirm = sureDeleteAssociatedPart.showAndWait();
 
@@ -219,7 +219,7 @@ public class ModifyRecipeController implements Initializable {
 
         ObservableList<Ingredient> ingredients = Inventory.lookupIngredient(searchString);
         if (ingredients.size() == 0){
-            try {
+            /*try {
                 int searchInt = Integer.parseInt(searchString);
                 Ingredient searchIngredient = Inventory.lookupIngredient(searchInt);
                 if (searchIngredient != null) {
@@ -229,9 +229,9 @@ public class ModifyRecipeController implements Initializable {
                     errorBox.setText("Cannot find part ID number");
                 }
             }
-            catch(NumberFormatException e) {
+            catch(NumberFormatException e) {*/
                 errorBox.setText("Part not found");
-            }
+            //}
         }
         allPartsTable.setItems(ingredients);
     }

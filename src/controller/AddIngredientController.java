@@ -106,7 +106,7 @@ public class AddIngredientController implements Initializable {
             return;
         }
 
-        int idInput = Inventory.findNewIngredientId();
+        //int idInput = Inventory.findNewIngredientId();
         int invInput = Integer.parseInt(invBox.getText());
         double priceCostInput = Double.parseDouble(priceCostBox.getText());
         int maxInput = Integer.parseInt(maxBox.getText());
@@ -133,7 +133,7 @@ public class AddIngredientController implements Initializable {
         if (inHouseRadio.isSelected()) {
             int machineIdInput = Integer.parseInt(switchBox.getText());
 
-            Perishable part = new Perishable(idInput, nameInput, priceCostInput,
+            Perishable part = new Perishable(nameInput, priceCostInput,
                     invInput, minInput, maxInput, machineIdInput);
             Inventory.addIngredient(part);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
@@ -155,7 +155,7 @@ public class AddIngredientController implements Initializable {
                 return;
             }
 
-            NonPerishable part = new NonPerishable(idInput, nameInput, priceCostInput,
+            NonPerishable part = new NonPerishable(nameInput, priceCostInput,
                     invInput, minInput, maxInput, companyNameInput);
             Inventory.addIngredient(part);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
