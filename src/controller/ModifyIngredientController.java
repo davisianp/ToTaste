@@ -45,7 +45,6 @@ public class ModifyIngredientController implements Initializable {
 
     public static void setInitialModifyIngredient(Ingredient selectedIngredient) {
 
-        idInput = selectedIngredient.getId();
         nameInput = selectedIngredient.getName();
         invInput = selectedIngredient.getStock();
         priceCostInput = selectedIngredient.getPrice();
@@ -175,9 +174,9 @@ public class ModifyIngredientController implements Initializable {
 
         if (inHouseRadio.isSelected()) {
             int machineIdInput = Integer.parseInt(switchBox.getText());
-            Perishable part = new Perishable(idInput, nameInput, priceCostInput,
+            Perishable part = new Perishable( nameInput, priceCostInput,
                     invInput, minInput, maxInput, machineIdInput);
-            Inventory.updateIngredient(idInput, part);
+            Inventory.updateIngredient(nameInput, part);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 900, 400);
@@ -196,9 +195,9 @@ public class ModifyIngredientController implements Initializable {
                 return;
             }
 
-            NonPerishable part = new NonPerishable(idInput, nameInput, priceCostInput,
+            NonPerishable part = new NonPerishable( nameInput, priceCostInput,
                     invInput, minInput, maxInput, companyNameInput);
-            Inventory.updateIngredient(idInput, part);
+            Inventory.updateIngredient(nameInput, part);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 900, 400);
