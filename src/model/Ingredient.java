@@ -3,33 +3,33 @@ package model;
 
 public abstract class Ingredient {
 
-    private String name;
-    private double price;
+    private String ingredientName;
+    private double pricePerEach;
     private int stock;
-    private int min;
-    private int max;
-    public Ingredient(String name, double price, int stock, int min, int max) {
-        this.name = name;
-        this.price = price;
+    private String unitOfMeasure;
+    private int servingsPerContainer;
+    public Ingredient(String ingredientName, double pricePerEach, int stock, String unitOfMeasure, int servingsPerContainer) {
+        this.ingredientName = ingredientName;
+        this.pricePerEach = pricePerEach;
         this.stock = stock;
-        this.min = min;
-        this.max = max;
+        this.unitOfMeasure = unitOfMeasure;
+        this.servingsPerContainer = servingsPerContainer;
     }
 
-    public String getName() {
-        return name;
+    public String getIngredientName() {
+        return ingredientName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIngredientName(String ingredientName) {
+        this.ingredientName = ingredientName;
     }
 
-    public double getPrice() {
-        return price;
+    public double getPricePerEach() {
+        return pricePerEach;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPricePerEach(double pricePerEach) {
+        this.pricePerEach = pricePerEach;
     }
 
     public int getStock() {
@@ -40,20 +40,20 @@ public abstract class Ingredient {
         this.stock = stock;
     }
 
-    public int getMin() {
-        return min;
+    public String getUnitOfMeasure() {
+        return unitOfMeasure;
     }
 
-    public void setMin(int min) {
-        this.min = min;
+    public void setUnitOfMeasure(String unitOfMeasure) {
+        this.unitOfMeasure = unitOfMeasure;
     }
 
-    public int getMax() {
-        return max;
+    public int getServingsPerContainer() {
+        return servingsPerContainer;
     }
 
-    public void setMax(int max) {
-        this.max = max;
+    public void setServingsPerContainer(int servingsPerContainer) {
+        this.servingsPerContainer = servingsPerContainer;
     }
 
 }

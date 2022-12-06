@@ -45,7 +45,7 @@ public class Inventory {
         ObservableList<Ingredient> ingredientNames = FXCollections.observableArrayList();
         ObservableList<Ingredient> allIngredients = Inventory.getAllIngredients();
         for (Ingredient searchedIngredient : allIngredients) {
-            if (searchedIngredient.getName().contains(ingredientName)) {
+            if (searchedIngredient.getIngredientName().contains(ingredientName)) {
                 ingredientNames.add(searchedIngredient);
             }
         }
@@ -66,7 +66,7 @@ public class Inventory {
     public static void updateIngredient(String searchName, Ingredient ingredient) {
         ObservableList<Ingredient> allIngredients = Inventory.getAllIngredients();
         for (Ingredient searchedForIngredient : allIngredients) {
-            if (Objects.equals(searchName, searchedForIngredient.getName())) {
+            if (Objects.equals(searchName, searchedForIngredient.getIngredientName())) {
                 allIngredients.remove(searchedForIngredient);
                 allIngredients.add(ingredient);
                 break;
@@ -102,11 +102,11 @@ public class Inventory {
     }
 
     private static void addTestData() {
-        Perishable cap = new Perishable("Capacitive Diractors", 12.50, 12, 10, 20, 117);
+        Perishable cap = new Perishable("Smoked Sausage", 4.50, 2, "lbs", 1, "01/21/2023");
         Inventory.addIngredient(cap);
-        NonPerishable mod = new NonPerishable("Modial Reluctors", 112.99, 10, 5, 15, "Dodge");
+        NonPerishable mod = new NonPerishable("Red Kidney Beans", 2.00, 4, "tbsps", 1, "02/24");
         Inventory.addIngredient(mod);
-        NonPerishable fam = new NonPerishable("Famulated Amulite", 89.99, 15, 15, 30, "Rockwell");
+        NonPerishable fam = new NonPerishable("Long Grain Rice", 3.00, 1, "tsps", 20, "03/25");
         Inventory.addIngredient(fam);
         Recipe enc = new Recipe("Encabulator", 31200.50, 3, 1);
         Inventory.addRecipe(enc);

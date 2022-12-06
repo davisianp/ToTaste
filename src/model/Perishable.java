@@ -2,19 +2,20 @@ package model;
 
 public class Perishable extends Ingredient {
 
-    private int machineId;
+    private String shortDate;
 
-    public Perishable(String name, double price, int stock,
-                      int min, int max, int machineId) {
-        super(name, price, stock, min, max);
-        this.machineId = machineId;
+    public Perishable(String ingredientName, double pricePerEach,
+                      int stock, String unitOfMeasure, int servingsPerContainer,
+                      String shortDate) {
+        super(ingredientName, pricePerEach, stock, unitOfMeasure, servingsPerContainer);
+        this.shortDate = shortDate;
     }
 
-    public void setMachineId(int machineId) {
-        this.machineId = machineId;
+    public void setShortDate(String shortDate) {
+        this.shortDate = shortDate;
     }
 
-    public int getMachineId() {
-        return machineId;
+    public String getShortDate() {
+        return shortDate;
     }
 }

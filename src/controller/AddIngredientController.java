@@ -20,16 +20,16 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddIngredientController implements Initializable {
+    public Label addIngredientLabel;
     public RadioButton perishableRadio;
     public RadioButton nonPerishableRadio;
-    public Label addIngredientLabel;
-    public Label toggleTextSwitch;
     public TextField ingredientNameBox;
     public TextField stockBox;
     public TextField pricePerEachBox;
-    public TextField maxEachesBox;
+    public TextField unitOfMeasureBox;
+    public TextField servingsPerContainerBox;
     public TextField switchBox;
-    public TextField splitThisIntoTwoBox; // FIX ME
+    public Label toggleTextSwitch;
     public ToggleGroup perishableStateGroup;
 
     @Override
@@ -40,11 +40,11 @@ public class AddIngredientController implements Initializable {
     }
 
     public void toggleNonPerishable(ActionEvent actionEvent) {
-        toggleTextSwitch.setText("Expiration Date \n(MM/YYYY)");
+        toggleTextSwitch.setText("Short Expiration Date \n(MM/YYYY)");
     }
 
     public void togglePerishable(ActionEvent actionEvent) {
-        toggleTextSwitch.setText("Expiration Date \n(MM/DD/YYYY)");
+        toggleTextSwitch.setText("Long Expiration Date \n(MM/DD/YYYY)");
     }
 
     @FXML
@@ -76,21 +76,9 @@ public class AddIngredientController implements Initializable {
             errorCollector += "--Price/cost input must be a floating point number \n";
         }
         try {
-            int maxTestInput = Integer.parseInt(maxEachesBox.getText());
+            int servingsTestInput = Integer.parseInt(servingsPerContainerBox.getText());
         } catch (NumberFormatException e) {
-            errorCollector += "--Max input must be an integer greater than or equal to Min input \n";
-        }
-        try {
-            int minTestInput = Integer.parseInt(splitThisIntoTwoBox.getText());
-        } catch (NumberFormatException e) {
-            errorCollector += "--Min input must be an integer less than or equal to Max input \n";
-        }
-        if (perishableRadio.isSelected()) {
-            try {
-                int machineIdTestInput = Integer.parseInt(switchBox.getText());
-            } catch (NumberFormatException e) {
-                errorCollector += "--Machine ID input must be an integer";
-            }
+            errorCollector += "--number of servings in a container must be an integer \n";
         }
 
         if (!errorCollector.isBlank()){
@@ -102,34 +90,24 @@ public class AddIngredientController implements Initializable {
             return;
         }
 
-        int invInput = Integer.parseInt(stockBox.getText());
-        double priceCostInput = Double.parseDouble(pricePerEachBox.getText());
-        int maxInput = Integer.parseInt(maxEachesBox.getText());
-        int minInput = Integer.parseInt(splitThisIntoTwoBox.getText());
-
-        if (minInput > maxInput) {
-            Alert minMaxError = new Alert(Alert.AlertType.ERROR);
-            minMaxError.setTitle("Min/Max Unexpected Input");
-            minMaxError.setHeaderText("Min was set as a higher value than Max");
-            minMaxError.setContentText("Please enter Min as a lower value than Max");
-            minMaxError.showAndWait();
-            return;
-        }
-
-        if (minInput > invInput || invInput > maxInput) {
-            Alert invBoundsError = new Alert(Alert.AlertType.ERROR);
-            invBoundsError.setTitle("Inventory Unexpected Input");
-            invBoundsError.setHeaderText("Inventory input is out of range given Min and Max");
-            invBoundsError.setContentText("Please enter Inv as a number between (or equal to) Min and Max");
-            invBoundsError.showAndWait();
-            return;
-        }
+        int stockInput = Integer.parseInt(stockBox.getText());
+        double priceEachInput = Double.parseDouble(pricePerEachBox.getText());
+        String unitTypeInput = unitOfMeasureBox.getText();
+        int servingsNumberInput = Integer.parseInt(servingsPerContainerBox.getText());
 
         if (perishableRadio.isSelected()) {
-            int machineIdInput = Integer.parseInt(switchBox.getText());
+            String shortDateInput = switchBox.getText();
 
-            Perishable part = new Perishable(nameInput, priceCostInput,
-                    invInput, minInput, maxInput, machineIdInput);
+            if(shortDateInput.isBlank()){
+                Alert shortDateEmptyAlert = new Alert(Alert.AlertType.ERROR);
+                shortDateEmptyAlert.setTitle("Short Date Field Is Empty");
+                shortDateEmptyAlert.setHeaderText("Short date field must have a value of MM/YYYY");
+                shortDateEmptyAlert.setContentText("Please enter a valid date with month and year format.");
+                shortDateEmptyAlert.showAndWait();
+                return;
+            }
+            Perishable part = new Perishable(nameInput, priceEachInput,
+                    stockInput, unitTypeInput, servingsNumberInput, shortDateInput);
             Inventory.addIngredient(part);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
@@ -140,18 +118,18 @@ public class AddIngredientController implements Initializable {
         }
 
         else if(nonPerishableRadio.isSelected()) {
-            String companyNameInput = switchBox.getText();
-            if(companyNameInput.isBlank()){
-                Alert companyNameBlankError = new Alert(Alert.AlertType.ERROR);
-                companyNameBlankError.setTitle("Company Name Field Is Empty");
-                companyNameBlankError.setHeaderText("Company Name field must have a string value");
-                companyNameBlankError.setContentText("Please enter a Company Name using letters/numbers/spaces only");
-                companyNameBlankError.showAndWait();
+            String longDateInput = switchBox.getText();
+            if(longDateInput.isBlank()){
+                Alert longDateEmptyAlert = new Alert(Alert.AlertType.ERROR);
+                longDateEmptyAlert.setTitle("Long Date Field Is Empty");
+                longDateEmptyAlert.setHeaderText("Long date field must have a value of MM/DD/YYYY");
+                longDateEmptyAlert.setContentText("Please enter a valid date with month, day, year format.");
+                longDateEmptyAlert.showAndWait();
                 return;
             }
 
-            NonPerishable part = new NonPerishable(nameInput, priceCostInput,
-                    invInput, minInput, maxInput, companyNameInput);
+            NonPerishable part = new NonPerishable(nameInput, priceEachInput,
+                    stockInput, unitTypeInput, servingsNumberInput, longDateInput);
             Inventory.addIngredient(part);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();

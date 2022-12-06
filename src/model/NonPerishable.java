@@ -2,19 +2,20 @@ package model;
 
 public class NonPerishable extends Ingredient {
 
-    private String companyName;
+    private String longDate;
 
-    public NonPerishable(String name, double price, int stock,
-                         int min, int max, String companyName) {
-        super(name, price, stock, min, max);
-        this.companyName = companyName;
+    public NonPerishable(String ingredientName, double pricePerEach,
+                         int stock, String unitOfMeasure, int servingsPerContainer,
+                         String longDate) {
+        super(ingredientName, pricePerEach, stock, unitOfMeasure, servingsPerContainer);
+        this.longDate = longDate;
     }
 
-    public void setCompanyName(String companyName){
-        this.companyName = companyName;
+    public void setLongDate(String longDate){
+        this.longDate = longDate;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getLongDate() {
+        return longDate;
     }
 }

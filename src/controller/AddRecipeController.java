@@ -84,7 +84,7 @@ public class AddRecipeController implements Initializable {
         Alert sureDeleteAssociatedPart = new Alert(Alert.AlertType.CONFIRMATION);
         sureDeleteAssociatedPart.setTitle("Required Ingredients");
         sureDeleteAssociatedPart.setHeaderText("Delete Associated Part ID " +
-                selectedIngredient.getName() + "?");
+                selectedIngredient.getIngredientName() + "?");
         sureDeleteAssociatedPart.setContentText("Do you want to delete this part?");
         Optional<ButtonType> confirm = sureDeleteAssociatedPart.showAndWait();
 

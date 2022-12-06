@@ -105,7 +105,7 @@ public class ModifyRecipeController implements Initializable {
         Alert sureDeleteRequiredIngredient = new Alert(Alert.AlertType.CONFIRMATION);
         sureDeleteRequiredIngredient.setTitle("Required Ingredients");
         sureDeleteRequiredIngredient.setHeaderText("Delete Required Ingredient Name: " +
-                selectedIngredient.getName() + "?");
+                selectedIngredient.getIngredientName() + "?");
         sureDeleteRequiredIngredient.setContentText("Do you want to delete this ingredient?");
         Optional<ButtonType> confirm = sureDeleteRequiredIngredient.showAndWait();
 

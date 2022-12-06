@@ -48,9 +48,9 @@ public class MainController implements Initializable {
         inventoryIngredientTable.setItems(Inventory.getAllIngredients());
         inventoryRecipeTable.setItems(Inventory.getAllRecipes());
 
-        ingredientName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        ingredientName.setCellValueFactory(new PropertyValueFactory<>("ingredientName"));
         ingredientStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        ingredientPricePerEach.setCellValueFactory(new PropertyValueFactory<>("price"));
+        ingredientPricePerEach.setCellValueFactory(new PropertyValueFactory<>("pricePerEach"));
 
         recipeName.setCellValueFactory(new PropertyValueFactory<>("name"));
         recipeServings.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -93,7 +93,7 @@ public class MainController implements Initializable {
 
         Alert sureDeleteIngredient = new Alert(Alert.AlertType.CONFIRMATION);
         sureDeleteIngredient.setTitle("Ingredients");
-        sureDeleteIngredient.setHeaderText("Delete Ingredient: " + selectedIngredient.getName() + "?");
+        sureDeleteIngredient.setHeaderText("Delete Ingredient: " + selectedIngredient.getIngredientName() + "?");
         sureDeleteIngredient.setContentText("Do you want to delete this ingredient?");
         Optional<ButtonType> confirm = sureDeleteIngredient.showAndWait();
 
@@ -158,7 +158,7 @@ public class MainController implements Initializable {
                 Alert requiredIngredientRecipeError = new Alert(Alert.AlertType.ERROR);
                 requiredIngredientRecipeError.setTitle("Required Recipe Ingredient Error");
                 requiredIngredientRecipeError.setHeaderText("The recipe named " + selectedRecipe.getName() + ", has an ingredient it requires");
-                requiredIngredientRecipeError.setContentText("Please remove " + requiredIngredient.getName() +
+                requiredIngredientRecipeError.setContentText("Please remove " + requiredIngredient.getIngredientName() +
                         "\nfrom the recipe before attempting to delete this recipe.\n" +
                         "Recipes with required ingredients cannot be deleted.");
                 requiredIngredientRecipeError.showAndWait();
