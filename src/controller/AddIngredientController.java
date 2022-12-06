@@ -20,30 +20,31 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddIngredientController implements Initializable {
-    public RadioButton inHouseRadio;
-    public RadioButton outsourcedRadio;
-    public Label addPartLabel;
+    public RadioButton perishableRadio;
+    public RadioButton nonPerishableRadio;
+    public Label addIngredientLabel;
     public Label toggleTextSwitch;
-    public TextField nameBox;
-    public TextField invBox;
-    public TextField priceCostBox;
-    public TextField maxBox;
+    public TextField ingredientNameBox;
+    public TextField stockBox;
+    public TextField pricePerEachBox;
+    public TextField maxEachesBox;
     public TextField switchBox;
-    public TextField minBox;
+    public TextField splitThisIntoTwoBox; // FIX ME
+    public ToggleGroup perishableStateGroup;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        addPartLabel.setText("Add Part");
-        addPartLabel.setFont(Font.font("system", FontWeight.BOLD, FontPosture.REGULAR, 18));
+        addIngredientLabel.setText("Add Ingredient");
+        addIngredientLabel.setFont(Font.font("system", FontWeight.BOLD, FontPosture.REGULAR, 18));
         togglePerishable(new ActionEvent());
     }
 
     public void toggleNonPerishable(ActionEvent actionEvent) {
-        toggleTextSwitch.setText("Company Name");
+        toggleTextSwitch.setText("Expiration Date \n(MM/YYYY)");
     }
 
     public void togglePerishable(ActionEvent actionEvent) {
-        toggleTextSwitch.setText("Machine ID");
+        toggleTextSwitch.setText("Expiration Date \n(MM/DD/YYYY)");
     }
 
     @FXML
@@ -59,37 +60,32 @@ public class AddIngredientController implements Initializable {
     public void onSaveClick(ActionEvent actionEvent) throws IOException {
         String errorCollector = "";
 
-        String nameInput = nameBox.getText();
+        String nameInput = ingredientNameBox.getText();
         if(nameInput.isBlank()){
             Alert nameBlankError = new Alert(Alert.AlertType.ERROR);
-            nameBlankError.setTitle("Name Field Is Empty");
-            nameBlankError.setHeaderText("Name field must have a string value");
+            nameBlankError.setTitle("Ingredient Name Field Is Empty");
+            nameBlankError.setHeaderText("Ingredient name field must have a string value");
             nameBlankError.setContentText("Please enter a name using letters/numbers/spaces only");
             nameBlankError.showAndWait();
             return;
         }
 
         try {
-            int invTestInput = Integer.parseInt(invBox.getText());
-        } catch (NumberFormatException e) {
-            errorCollector += "--Inv input must be an integer between Min and Max values \n";
-        }
-        try {
-            double priceCostTestInput = Double.parseDouble(priceCostBox.getText());
+            double priceCostTestInput = Double.parseDouble(pricePerEachBox.getText());
         } catch (NumberFormatException e) {
             errorCollector += "--Price/cost input must be a floating point number \n";
         }
         try {
-            int maxTestInput = Integer.parseInt(maxBox.getText());
+            int maxTestInput = Integer.parseInt(maxEachesBox.getText());
         } catch (NumberFormatException e) {
             errorCollector += "--Max input must be an integer greater than or equal to Min input \n";
         }
         try {
-            int minTestInput = Integer.parseInt(minBox.getText());
+            int minTestInput = Integer.parseInt(splitThisIntoTwoBox.getText());
         } catch (NumberFormatException e) {
             errorCollector += "--Min input must be an integer less than or equal to Max input \n";
         }
-        if (inHouseRadio.isSelected()) {
+        if (perishableRadio.isSelected()) {
             try {
                 int machineIdTestInput = Integer.parseInt(switchBox.getText());
             } catch (NumberFormatException e) {
@@ -106,11 +102,10 @@ public class AddIngredientController implements Initializable {
             return;
         }
 
-        //int idInput = Inventory.findNewIngredientId();
-        int invInput = Integer.parseInt(invBox.getText());
-        double priceCostInput = Double.parseDouble(priceCostBox.getText());
-        int maxInput = Integer.parseInt(maxBox.getText());
-        int minInput = Integer.parseInt(minBox.getText());
+        int invInput = Integer.parseInt(stockBox.getText());
+        double priceCostInput = Double.parseDouble(pricePerEachBox.getText());
+        int maxInput = Integer.parseInt(maxEachesBox.getText());
+        int minInput = Integer.parseInt(splitThisIntoTwoBox.getText());
 
         if (minInput > maxInput) {
             Alert minMaxError = new Alert(Alert.AlertType.ERROR);
@@ -130,7 +125,7 @@ public class AddIngredientController implements Initializable {
             return;
         }
 
-        if (inHouseRadio.isSelected()) {
+        if (perishableRadio.isSelected()) {
             int machineIdInput = Integer.parseInt(switchBox.getText());
 
             Perishable part = new Perishable(nameInput, priceCostInput,
@@ -144,7 +139,7 @@ public class AddIngredientController implements Initializable {
             stage.show();
         }
 
-        else if(outsourcedRadio.isSelected()) {
+        else if(nonPerishableRadio.isSelected()) {
             String companyNameInput = switchBox.getText();
             if(companyNameInput.isBlank()){
                 Alert companyNameBlankError = new Alert(Alert.AlertType.ERROR);

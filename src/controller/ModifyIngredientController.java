@@ -22,72 +22,70 @@ import java.util.ResourceBundle;
 
 public class ModifyIngredientController implements Initializable {
     @FXML
-    public Label modifyPartLabel;
-    public RadioButton inHouseRadio;
-    public RadioButton outsourcedRadio;
-    public TextField idBox;
-    public TextField nameBox;
-    public TextField invBox;
-    public TextField priceCostBox;
-    public TextField maxBox;
-    public TextField minBox;
+    public Label modifyIngredientLabel;
+    public RadioButton perishableRadio;
+    public RadioButton nonPerishableRadio;
+    public TextField ingredientNameBox;
+    public TextField stockBox;
+    public TextField pricePerEachBox;
+    public TextField maxEachesBox;
+    public TextField minBox; // FIX ME: split this box into two data members
     public TextField switchBox;
     public Label toggleTextSwitch;
 
-    private static int idInput;
-    private static String nameInput;
-    private static int invInput;
-    private static double priceCostInput;
-    private static int maxInput;
-    private static int minInput;
+    private static String ingredientNameInput;
+    private static int stockInput;
+    private static double priceEachInput;
+    private static int maxEachesInput;
+    private static int minInput; // FIX ME
     private static String switchBoxInput;
-    private static boolean isOutsourced;
+    private static boolean isNonPerishable;
+    public ToggleGroup perishableStateGroup;
 
     public static void setInitialModifyIngredient(Ingredient selectedIngredient) {
 
-        nameInput = selectedIngredient.getName();
-        invInput = selectedIngredient.getStock();
-        priceCostInput = selectedIngredient.getPrice();
-        maxInput = selectedIngredient.getMax();
+        ingredientNameInput = selectedIngredient.getName();
+        stockInput = selectedIngredient.getStock();
+        priceEachInput = selectedIngredient.getPrice();
+        maxEachesInput = selectedIngredient.getMax();
         minInput = selectedIngredient.getMin();
         if(selectedIngredient instanceof NonPerishable){
             switchBoxInput = ((NonPerishable) selectedIngredient).getCompanyName();
-            isOutsourced = true;
+            isNonPerishable = true;
         }
         else{
             switchBoxInput = String.valueOf(((Perishable) selectedIngredient).getMachineId());
-            isOutsourced = false;
+            isNonPerishable = false;
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        modifyPartLabel.setText("Modify Part");
-        modifyPartLabel.setFont(Font.font("system", FontWeight.BOLD, FontPosture.REGULAR, 18));
+        modifyIngredientLabel.setText("Modify Part");
+        modifyIngredientLabel.setFont(Font.font("system", FontWeight.BOLD, FontPosture.REGULAR, 18));
 
-        idBox.setText("" + idInput);
-        nameBox.setText("" + nameInput);
-        priceCostBox.setText("" + priceCostInput);
-        invBox.setText("" + invInput);
-        maxBox.setText("" + maxInput);
+        ingredientNameBox.setText("" + ingredientNameInput);
+        pricePerEachBox.setText("" + priceEachInput);
+        stockBox.setText("" + stockInput);
+        maxEachesBox.setText("" + maxEachesInput);
         minBox.setText("" + minInput);
         switchBox.setText("" + switchBoxInput);
-        if (isOutsourced) {
-            outsourcedRadio.setSelected(true);
+        if (isNonPerishable) {
+            nonPerishableRadio.setSelected(true);
             toggleNonPerishable(new ActionEvent());
         }
         else {
-            inHouseRadio.setSelected(true);
+            perishableRadio.setSelected(true);
             togglePerishable(new ActionEvent());
         }
     }
 
     public void togglePerishable(ActionEvent actionEvent) {
-        toggleTextSwitch.setText("Machine ID");
+        toggleTextSwitch.setText("Expiration Date \n(MM/DD/YYYY)");
     }
 
     public void toggleNonPerishable(ActionEvent actionEvent) {
-        toggleTextSwitch.setText("Company Name");
+        toggleTextSwitch.setText("Expiration Date \n(MM/YYYY)");
     }
 
     public void onCancelClick(ActionEvent actionEvent) throws IOException {
@@ -102,28 +100,23 @@ public class ModifyIngredientController implements Initializable {
     public void onSaveClick(ActionEvent actionEvent) throws IOException {
         String errorCollector = "";
 
-        String nameInput = nameBox.getText();
+        String nameInput = ingredientNameBox.getText();
         if(nameInput.isBlank()){
             Alert nameBlankError = new Alert(Alert.AlertType.ERROR);
-            nameBlankError.setTitle("Name Field Is Empty");
-            nameBlankError.setHeaderText("Name field must have a string value");
+            nameBlankError.setTitle("Ingredient Name Field Is Empty");
+            nameBlankError.setHeaderText("Ingredient name field must have a string value");
             nameBlankError.setContentText("Please enter a name using letters/numbers/spaces only");
             nameBlankError.showAndWait();
             return;
         }
 
         try {
-            int invTestInput = Integer.parseInt(invBox.getText());
-        } catch (NumberFormatException e) {
-            errorCollector += "--Inv input must be an integer between Min and Max values \n";
-        }
-        try {
-            double priceCostTestInput = Double.parseDouble(priceCostBox.getText());
+            double priceCostTestInput = Double.parseDouble(pricePerEachBox.getText());
         } catch (NumberFormatException e) {
             errorCollector += "--Price/cost input must be a floating point number \n";
         }
         try {
-            int maxTestInput = Integer.parseInt(maxBox.getText());
+            int maxTestInput = Integer.parseInt(maxEachesBox.getText());
         } catch (NumberFormatException e) {
             errorCollector += "--Max input must be an integer greater than or equal to Min input \n";
         }
@@ -132,7 +125,7 @@ public class ModifyIngredientController implements Initializable {
         } catch (NumberFormatException e) {
             errorCollector += "--Min input must be an integer less than or equal to Max input \n";
         }
-        if (inHouseRadio.isSelected()) {
+        if (perishableRadio.isSelected()) {
             try {
                 int machineIdTestInput = Integer.parseInt(switchBox.getText());
             } catch (NumberFormatException e) {
@@ -149,10 +142,9 @@ public class ModifyIngredientController implements Initializable {
             return;
         }
 
-        int idInput = Integer.parseInt(idBox.getText());
-        int invInput = Integer.parseInt(invBox.getText());
-        double priceCostInput = Double.parseDouble(priceCostBox.getText());
-        int maxInput = Integer.parseInt(maxBox.getText());
+        int invInput = Integer.parseInt(stockBox.getText());
+        double priceCostInput = Double.parseDouble(pricePerEachBox.getText());
+        int maxInput = Integer.parseInt(maxEachesBox.getText());
         int minInput = Integer.parseInt(minBox.getText());
 
         if (minInput > maxInput) {
@@ -172,7 +164,7 @@ public class ModifyIngredientController implements Initializable {
             return;
         }
 
-        if (inHouseRadio.isSelected()) {
+        if (perishableRadio.isSelected()) {
             int machineIdInput = Integer.parseInt(switchBox.getText());
             Perishable part = new Perishable( nameInput, priceCostInput,
                     invInput, minInput, maxInput, machineIdInput);
@@ -184,7 +176,7 @@ public class ModifyIngredientController implements Initializable {
             stage.setScene(scene);
             stage.show();
         }
-        else if(outsourcedRadio.isSelected()) {
+        else if(nonPerishableRadio.isSelected()) {
             String companyNameInput = switchBox.getText();
             if(companyNameInput.isBlank()){
                 Alert companyNameBlankError = new Alert(Alert.AlertType.ERROR);

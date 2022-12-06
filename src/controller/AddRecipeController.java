@@ -21,42 +21,39 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddRecipeController implements Initializable {
-    public Label addProductLabel;
-    public TextField nameBox;
-    public TextField invBox;
-    public TextField priceBox;
-    public TextField maxBox;
-    public TextField minBox;
-    public TableView<Ingredient> allPartsTable;
-    public TableColumn<Ingredient,?> partId;
-    public TableColumn<Ingredient,?> partName;
-    public TableColumn<Ingredient,?> partInventoryLevel;
-    public TableColumn<Ingredient,?> partPriceCostPerItem;
-    public TextField queryParts;
-    public TableView<Ingredient> associatedPartsTable;
-    public TableColumn<Ingredient, ?> associatedPartId;
-    public TableColumn<Ingredient, ?> associatedPartName;
-    public TableColumn<Ingredient, ?> associatedPartInvLevel;
-    public TableColumn<Ingredient, ?> associatedPricePerItem;
+    public Label addRecipeLabel;
+    public TextField recipeNameBox;
+    public TextField recipeServingsBox;
+    public TextField recipeCostBox;
+    public TextField flavorTagsBox;
+    public TableView<Ingredient> allIngredientsTable;
+    public TableColumn<Ingredient,?> ingredientName;
+    public TableColumn<Ingredient,?> ingredientStock;
+    public TableColumn<Ingredient,?> ingredientPricePerEach;
+    // add column to describe type of each
+    public TextField queryIngredients;
+    public TableView<Ingredient> requiredIngredientsTable;
+    public TableColumn<Ingredient, ?> requiredIngredientName;
+    public TableColumn<Ingredient, ?> requiredIngredientStock;
+    public TableColumn<Ingredient, ?> requiredIngredientPricePerEach;
+    // add column to describe type of each
     public Label errorBox;
 
     private final ObservableList<Ingredient> tempRequiredIngredients = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        addProductLabel.setText("Add Product");
-        addProductLabel.setFont(Font.font("system", FontWeight.BOLD, FontPosture.REGULAR, 18));
+        addRecipeLabel.setText("Add Recipe");
+        addRecipeLabel.setFont(Font.font("system", FontWeight.BOLD, FontPosture.REGULAR, 18));
 
-        allPartsTable.setItems(Inventory.getAllIngredients());
-        partId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        partName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        partInventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        partPriceCostPerItem.setCellValueFactory(new PropertyValueFactory<>("price"));
+        allIngredientsTable.setItems(Inventory.getAllIngredients());
+        ingredientName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        ingredientStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        ingredientPricePerEach.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        associatedPartId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        associatedPartName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        associatedPartInvLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        associatedPricePerItem.setCellValueFactory(new PropertyValueFactory<>("price"));
+        requiredIngredientName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        requiredIngredientStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        requiredIngredientPricePerEach.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
     public void onCancelClick(ActionEvent actionEvent) throws IOException {
@@ -69,17 +66,17 @@ public class AddRecipeController implements Initializable {
     }
 
     public void onAddIngredientClick(ActionEvent actionEvent) {
-        Ingredient selectedIngredient = allPartsTable.getSelectionModel().getSelectedItem();
+        Ingredient selectedIngredient = allIngredientsTable.getSelectionModel().getSelectedItem();
 
         if(selectedIngredient == null)
             return;
 
         tempRequiredIngredients.add(selectedIngredient);
-        associatedPartsTable.setItems(tempRequiredIngredients);
+        requiredIngredientsTable.setItems(tempRequiredIngredients);
     }
 
     public void onRemoveRequiredIngredientClick(ActionEvent actionEvent) {
-        Ingredient selectedIngredient = associatedPartsTable.getSelectionModel().getSelectedItem();
+        Ingredient selectedIngredient = requiredIngredientsTable.getSelectionModel().getSelectedItem();
 
         if(selectedIngredient == null)
             return;
@@ -96,13 +93,13 @@ public class AddRecipeController implements Initializable {
         }
 
         tempRequiredIngredients.remove(selectedIngredient);
-        associatedPartsTable.setItems(tempRequiredIngredients);
+        requiredIngredientsTable.setItems(tempRequiredIngredients);
     }
 
     public void onSaveClick(ActionEvent actionEvent) throws IOException {
         String errorCollector = "";
 
-        String nameInput = nameBox.getText();
+        String nameInput = recipeNameBox.getText();
         if(nameInput.isBlank()){
             Alert nameBlankError = new Alert(Alert.AlertType.ERROR);
             nameBlankError.setTitle("Name Field Is Empty");
@@ -113,22 +110,17 @@ public class AddRecipeController implements Initializable {
         }
 
         try {
-            int invTestInput = Integer.parseInt(invBox.getText());
+            int invTestInput = Integer.parseInt(recipeServingsBox.getText());
         } catch (NumberFormatException e) {
             errorCollector += "--Inv input must be an integer between Min and Max values \n";
         }
         try {
-            double priceCostTestInput = Double.parseDouble(priceBox.getText());
+            double priceCostTestInput = Double.parseDouble(recipeCostBox.getText());
         } catch (NumberFormatException e) {
             errorCollector += "--Price/cost input must be a floating point number \n";
         }
         try {
-            int maxTestInput = Integer.parseInt(maxBox.getText());
-        } catch (NumberFormatException e) {
-            errorCollector += "--Max input must be an integer greater than or equal to Min input \n";
-        }
-        try {
-            int minTestInput = Integer.parseInt(minBox.getText());
+            int minTestInput = Integer.parseInt(flavorTagsBox.getText());
         } catch (NumberFormatException e) {
             errorCollector += "--Min input must be an integer less than or equal to Max input \n";
         }
@@ -142,31 +134,12 @@ public class AddRecipeController implements Initializable {
             return;
         }
 
-        int idInput = Inventory.findNewRecipeId();
-        int invInput = Integer.parseInt(invBox.getText());
-        double priceCostInput = Double.parseDouble(priceBox.getText());
-        int maxInput = Integer.parseInt(maxBox.getText());
-        int minInput = Integer.parseInt(minBox.getText());
+        int invInput = Integer.parseInt(recipeServingsBox.getText());
+        double priceCostInput = Double.parseDouble(recipeCostBox.getText());
+        int minInput = Integer.parseInt(flavorTagsBox.getText());
 
-        if (minInput > maxInput) {
-            Alert minMaxError = new Alert(Alert.AlertType.ERROR);
-            minMaxError.setTitle("Min/Max Unexpected Input");
-            minMaxError.setHeaderText("Min was set as a higher value than Max");
-            minMaxError.setContentText("Please enter Min as a lower value than Max");
-            minMaxError.showAndWait();
-            return;
-        }
-        if (minInput > invInput || invInput > maxInput) {
-            Alert invBoundsError = new Alert(Alert.AlertType.ERROR);
-            invBoundsError.setTitle("Inventory Unexpected Input");
-            invBoundsError.setHeaderText("Inventory input is out of range given Min and Max");
-            invBoundsError.setContentText("Please enter Inv as a number between (or equal to) Min and Max");
-            invBoundsError.showAndWait();
-            return;
-        }
-
-        Recipe recipe = new Recipe(idInput, nameInput, priceCostInput,
-                invInput, minInput, maxInput);
+        Recipe recipe = new Recipe(nameInput, priceCostInput,
+                invInput, minInput);
 
         for (Ingredient tempRequiredIngredient : tempRequiredIngredients) {
             recipe.addRequiredIngredient(tempRequiredIngredient);
@@ -183,23 +156,12 @@ public class AddRecipeController implements Initializable {
 
     public void ingredientSearchActivate() {
         errorBox.setText("");
-        String searchString = queryParts.getText();
+        String searchString = queryIngredients.getText();
 
         ObservableList<Ingredient> ingredients = Inventory.lookupIngredient(searchString);
         if (ingredients.size() == 0){
-            /*try {
-                int searchInt = Integer.parseInt(searchString);
-                Ingredient searchIngredient = Inventory.lookupIngredient(searchInt);
-                if (searchIngredient != null) {
-                    ingredients.add(searchIngredient);
-                }else {
-                    errorBox.setText("Cannot find part ID number");
-                }
-            }*/
-            //catch(NumberFormatException e) {
-                errorBox.setText("Part not found");
-            //}
+            errorBox.setText("Ingredient not found");
         }
-        allPartsTable.setItems(ingredients);
+        allIngredientsTable.setItems(ingredients);
     }
 }

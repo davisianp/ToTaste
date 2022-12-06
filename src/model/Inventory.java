@@ -74,10 +74,10 @@ public class Inventory {
         }
     }
 
-    public static void updateRecipe(int index, Recipe recipe) {
+    public static void updateRecipe(String searchName, Recipe recipe) {
         ObservableList<Recipe> allRecipes = Inventory.getAllRecipes();
         for (Recipe searchedForRecipe : allRecipes) {
-            if (index == searchedForRecipe.getId()) {
+            if (Objects.equals(searchName, searchedForRecipe.getName())) {
                 allRecipes.remove(searchedForRecipe);
                 allRecipes.add(recipe);
                 break;
@@ -101,32 +101,6 @@ public class Inventory {
         return ALL_RECIPES;
     }
 
-    /* public static int findNewIngredientId() {
-        int maxId = -1;
-        ObservableList<Ingredient> allIngredients = Inventory.getAllIngredients();
-
-        for (Ingredient searchedForIngredient : allIngredients) {
-            if (maxId <= searchedForIngredient.getId()) {
-                maxId = searchedForIngredient.getId();
-            }
-        }
-        return maxId + 1;
-    }
-
-     */
-
-    public static int findNewRecipeId() {
-        int maxId = -1;
-        ObservableList<Recipe> allRecipes = Inventory.getAllRecipes();
-
-        for (Recipe searchedForRecipe : allRecipes) {
-            if (maxId <= searchedForRecipe.getId()) {
-                maxId = searchedForRecipe.getId();
-            }
-        }
-        return maxId + 1;
-    }
-
     private static void addTestData() {
         Perishable cap = new Perishable("Capacitive Diractors", 12.50, 12, 10, 20, 117);
         Inventory.addIngredient(cap);
@@ -134,11 +108,11 @@ public class Inventory {
         Inventory.addIngredient(mod);
         NonPerishable fam = new NonPerishable("Famulated Amulite", 89.99, 15, 15, 30, "Rockwell");
         Inventory.addIngredient(fam);
-        Recipe enc = new Recipe(1001, "Encabulator", 31200.50, 3, 1, 5);
+        Recipe enc = new Recipe("Encabulator", 31200.50, 3, 1);
         Inventory.addRecipe(enc);
-        Recipe slo = new Recipe(1002, "Slotted Stater", 450.33, 5, 2, 10);
+        Recipe slo = new Recipe("Slotted Stater", 450.33, 5, 2);
         Inventory.addRecipe(slo);
-        Recipe pha = new Recipe(1003, "Phase Detractor", 1232.99, 10, 1, 10);
+        Recipe pha = new Recipe("Phase Detractor", 1232.99, 10, 1);
         Inventory.addRecipe(pha);
     }
 

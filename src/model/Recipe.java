@@ -3,9 +3,10 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.Objects;
+
 public class Recipe {
     private ObservableList<Ingredient> requiredIngredients = FXCollections.observableArrayList();
-    private int id;
     private String name;
     private double price;
     private int stock;
@@ -13,17 +14,13 @@ public class Recipe {
     private int max;
 
 
-    public Recipe(int id, String name, double price,
-                  int stock, int min, int max){
-        this.id = id;
+    public Recipe(String name, double price,
+                  int stock, int min){
         this.name = name;
         this.price = price;
         this.stock = stock;
         this.min = min;
-        this.max = max;
     }
-
-    public void setId(int id){ this.id = id; }
 
     public void setName(String name){ this.name = name; }
 
@@ -35,8 +32,6 @@ public class Recipe {
     public void setMin(int min){ this.min = min; }
 
     public void setMax(int max){ this.max = max; }
-
-    public int getId() { return id; }
 
     public String getName() {
         return name;
@@ -65,7 +60,7 @@ public class Recipe {
     public boolean deleteRequiredIngredient(Ingredient selectedRequiredIngredient){
         for (int i = 0; i < Inventory.getAllRecipes().size(); ++i) {
             Recipe checkRecipe = Inventory.getAllRecipes().get(i);
-            if (checkRecipe.getId() == id) {
+            if (Objects.equals(checkRecipe.getName(), name)) {
                 for (int j = 0; j < checkRecipe.getAllRequiredIngredients().size(); ++j) {
                     if (selectedRequiredIngredient == checkRecipe.requiredIngredients.get(j)) {
                         return false;

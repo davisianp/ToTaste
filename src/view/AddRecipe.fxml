@@ -13,7 +13,7 @@
     <children>
       <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#ffffff00" height="570.0" layoutX="15.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" width="770.0" />
         <Button layoutX="710.0" layoutY="506.0" onAction="#onCancelClick" text="Cancel" />
-      <Label fx:id="addProductLabel" layoutX="45.0" layoutY="29.0" prefHeight="43.0" prefWidth="131.0" text="Add Product">
+      <Label fx:id="addRecipeLabel" layoutX="45.0" layoutY="29.0" prefHeight="43.0" prefWidth="131.0" text="Add Product">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -23,11 +23,10 @@
             <Font name="System Italic" size="12.0" />
          </font>
       </TextField>
-      <TextField fx:id="nameBox" layoutX="125.0" layoutY="139.0" prefHeight="25.0" prefWidth="117.0" />
-      <TextField fx:id="invBox" layoutX="125.0" layoutY="175.0" prefHeight="25.0" prefWidth="75.0" />
-      <TextField fx:id="priceBox" layoutX="125.0" layoutY="211.0" prefHeight="25.0" prefWidth="75.0" />
-      <TextField fx:id="maxBox" layoutX="125.0" layoutY="247.0" prefHeight="25.0" prefWidth="75.0" />
-      <TextField fx:id="minBox" layoutX="264.0" layoutY="247.0" prefHeight="25.0" prefWidth="75.0" />
+      <TextField fx:id="recipeNameBox" layoutX="125.0" layoutY="139.0" prefHeight="25.0" prefWidth="117.0" />
+      <TextField fx:id="recipeServingsBox" layoutX="125.0" layoutY="175.0" prefHeight="25.0" prefWidth="75.0" />
+      <TextField fx:id="recipeCostBox" layoutX="125.0" layoutY="211.0" prefHeight="25.0" prefWidth="75.0" />
+      <TextField fx:id="flavorTagsBox" layoutX="264.0" layoutY="247.0" prefHeight="25.0" prefWidth="75.0" />
       <Label layoutX="70.0" layoutY="98.0" prefHeight="25.0" prefWidth="52.0" text="ID" />
       <Label layoutX="70.0" layoutY="139.0" prefHeight="25.0" prefWidth="52.0" text="Name" />
       <Label layoutX="70.0" layoutY="175.0" prefHeight="25.0" prefWidth="52.0" text="Inv" />
@@ -35,12 +34,11 @@
       <Label layoutX="70.0" layoutY="247.0" prefHeight="25.0" prefWidth="75.0" text="Max" />
       <Button layoutX="618.0" layoutY="506.0" onAction="#onSaveClick" prefHeight="25.0" prefWidth="52.0" text="Save" />
       <Label layoutX="231.0" layoutY="247.0" prefHeight="25.0" prefWidth="44.0" text="Min" />
-      <TableView fx:id="allPartsTable" layoutX="384.0" layoutY="74.0" prefHeight="158.0" prefWidth="378.0">
+      <TableView fx:id="allIngredientsTable" layoutX="384.0" layoutY="74.0" prefHeight="158.0" prefWidth="378.0">
          <columns>
-            <TableColumn fx:id="partId" prefWidth="69.0" text="Part ID" />
-            <TableColumn fx:id="partName" text="Part Name" />
-            <TableColumn fx:id="partInventoryLevel" prefWidth="100.0" text="Inventory Level" />
-            <TableColumn fx:id="partPriceCostPerItem" prefWidth="128.0" text="Price/Cost Per Unit" />
+            <TableColumn fx:id="ingredientName" text="Part Name" />
+            <TableColumn fx:id="ingredientStock" prefWidth="100.0" text="Inventory Level" />
+            <TableColumn fx:id="ingredientPricePerEach" prefWidth="128.0" text="Price/Cost Per Unit" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -48,13 +46,12 @@
       </TableView>
       <Button layoutX="711.0" layoutY="237.0" onAction="#onAddIngredientClick" prefHeight="25.0" prefWidth="54.0" text="Add" />
       <Button layoutX="618.0" layoutY="466.0" onAction="#onRemoveRequiredIngredientClick" text="Remove Associated Part" />
-      <TextField fx:id="queryParts" layoutX="594.0" layoutY="39.0" onAction="#ingredientSearchActivate" prefHeight="25.0" prefWidth="170.0" promptText="search by Part ID or Name" />
-      <TableView fx:id="associatedPartsTable" layoutX="384.0" layoutY="300.0" prefHeight="158.0" prefWidth="378.0">
+      <TextField fx:id="queryIngredients" layoutX="594.0" layoutY="39.0" onAction="#ingredientSearchActivate" prefHeight="25.0" prefWidth="170.0" promptText="search by Part ID or Name" />
+      <TableView fx:id="requiredIngredientsTable" layoutX="384.0" layoutY="300.0" prefHeight="158.0" prefWidth="378.0">
          <columns>
-            <TableColumn fx:id="associatedPartId" prefWidth="69.0" text="Part ID" />
-            <TableColumn fx:id="associatedPartName" text="Part Name" />
-            <TableColumn fx:id="associatedPartInvLevel" prefWidth="100.0" text="Inventory Level" />
-            <TableColumn fx:id="associatedPricePerItem" prefWidth="128.0" text="Price/Cost Per Unit" />
+            <TableColumn fx:id="requiredIngredientName" text="Part Name" />
+            <TableColumn fx:id="requiredIngredientStock" prefWidth="100.0" text="Inventory Level" />
+            <TableColumn fx:id="requiredIngredientPricePerEach" prefWidth="128.0" text="Price/Cost Per Unit" />
          </columns>
       </TableView>
       <Label fx:id="errorBox" layoutX="384.0" layoutY="39.0" prefHeight="25.0" prefWidth="197.0" textFill="RED" />

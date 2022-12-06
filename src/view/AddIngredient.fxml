@@ -8,30 +8,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyIngredientController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddIngredientController">
     <children>
         <Button layoutX="517.0" layoutY="348.0" onAction="#onCancelClick" text="Cancel" />
-      <Label fx:id="modifyPartLabel" layoutX="45.0" layoutY="29.0" prefHeight="43.0" prefWidth="117.0" text="Modify Part">
+
+        <Label fx:id="addIngredientLabel" layoutX="45.0" layoutY="29.0" prefHeight="43.0" prefWidth="101.0" text="Add Part">
          <font>
             <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <RadioButton fx:id="inHouseRadio" layoutX="173.0" layoutY="42.0" mnemonicParsing="false" onAction="#togglePerishable" prefHeight="17.0" prefWidth="101.0" selected="true" text="In-House">
+         </font></Label>
+      <RadioButton fx:id="perishableRadio" layoutX="173.0" layoutY="42.0" mnemonicParsing="false" onAction="#togglePerishable" prefHeight="17.0" prefWidth="101.0" selected="true" text="In-House">
          <toggleGroup>
-            <ToggleGroup fx:id="partProductionGroup" />
+            <ToggleGroup fx:id="perishableStateGroup" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="outsourcedRadio" layoutX="290.0" layoutY="42.0" mnemonicParsing="false" onAction="#toggleNonPerishable" prefHeight="17.0" prefWidth="108.0" text="Outsourced" toggleGroup="$partProductionGroup" />
-      <TextField fx:id="idBox" disable="true" editable="false" layoutX="181.0" layoutY="98.0" prefHeight="25.0" prefWidth="117.0" text="Auto Gen- Disabled">
+      <RadioButton fx:id="nonPerishableRadio" layoutX="290.0" layoutY="42.0" mnemonicParsing="false" onAction="#toggleNonPerishable" prefHeight="17.0" prefWidth="108.0" text="Outsourced" toggleGroup="$perishableStateGroup" />
+      <TextField disable="true" editable="false" layoutX="181.0" layoutY="98.0" prefHeight="25.0" prefWidth="117.0" text="Auto Gen- Disabled">
          <font>
             <Font name="System Italic" size="12.0" />
          </font>
       </TextField>
-      <TextField fx:id="nameBox" layoutX="181.0" layoutY="139.0" prefHeight="25.0" prefWidth="117.0" />
-      <TextField fx:id="invBox" layoutX="181.0" layoutY="175.0" prefHeight="25.0" prefWidth="117.0" />
-      <TextField fx:id="priceCostBox" layoutX="181.0" layoutY="211.0" prefHeight="25.0" prefWidth="117.0" />
-      <TextField fx:id="maxBox" layoutX="181.0" layoutY="247.0" prefHeight="25.0" prefWidth="117.0" />
-      <TextField fx:id="minBox" layoutX="398.0" layoutY="247.0" prefHeight="25.0" prefWidth="117.0" />
+      <TextField fx:id="ingredientNameBox" layoutX="181.0" layoutY="139.0" prefHeight="25.0" prefWidth="117.0" />
+      <TextField fx:id="stockBox" layoutX="181.0" layoutY="175.0" prefHeight="25.0" prefWidth="117.0" />
+      <TextField fx:id="pricePerEachBox" layoutX="181.0" layoutY="211.0" prefHeight="25.0" prefWidth="117.0" />
+      <TextField fx:id="maxEachesBox" layoutX="181.0" layoutY="247.0" prefHeight="25.0" prefWidth="117.0" />
+      <TextField fx:id="splitThisIntoTwoBox" layoutX="398.0" layoutY="247.0" prefHeight="25.0" prefWidth="117.0" />
       <TextField fx:id="switchBox" layoutX="181.0" layoutY="283.0" prefHeight="25.0" prefWidth="117.0" />
       <Label layoutX="70.0" layoutY="98.0" prefHeight="25.0" prefWidth="52.0" text="ID" />
       <Label layoutX="70.0" layoutY="139.0" prefHeight="25.0" prefWidth="52.0" text="Name" />
