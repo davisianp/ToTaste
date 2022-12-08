@@ -38,19 +38,19 @@ public class ModifyRecipeController implements Initializable {
     public TableColumn<Ingredient, ?> requiredIngredientStock;
     public TableColumn<Ingredient, ?> requiredIngredientPricePerEach;
 
-    private static String nameInput;
-    private static int invInput;
-    private static double priceCostInput;
-    private static int minInput;
+    private static String recipeNameInput;
+    private static int recipeServingsInput;
+    private static double recipeCostInput;
+    private static String flavorTagsInput;
     private static ObservableList<Ingredient> tempRequiredIngredients = FXCollections.observableArrayList();
     public Label errorBox;
 
     public static void setInitialModifyRecipe(Recipe selectedRecipe) {
 
-        nameInput = selectedRecipe.getName();
-        invInput = selectedRecipe.getStock();
-        priceCostInput = selectedRecipe.getPrice();
-        minInput = selectedRecipe.getMin();
+        recipeNameInput = selectedRecipe.getRecipeName();
+        recipeServingsInput = selectedRecipe.getRecipeServings();
+        recipeCostInput = selectedRecipe.getRecipeCost();
+        flavorTagsInput = selectedRecipe.getFlavorTags();
         tempRequiredIngredients = selectedRecipe.getAllRequiredIngredients();
 
     }
@@ -61,19 +61,21 @@ public class ModifyRecipeController implements Initializable {
         modifyRecipeLabel.setFont(Font.font("system", FontWeight.BOLD, FontPosture.REGULAR, 18));
 
         allIngredientsTable.setItems(Inventory.getAllIngredients());
-        ingredientName.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        ingredientName.setCellValueFactory(new PropertyValueFactory<>("ingredientName"));
         ingredientStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        ingredientPricePerEach.setCellValueFactory(new PropertyValueFactory<>("price"));
+        ingredientPricePerEach.setCellValueFactory(new PropertyValueFactory<>("pricePerEach"));
 
         requiredIngredientsTable.setItems(tempRequiredIngredients);
-        requiredIngredientName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        requiredIngredientStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        requiredIngredientPricePerEach.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        recipeNameBox.setText("" + nameInput);
-        recipeCostBox.setText("" + priceCostInput);
-        recipeServingsBox.setText("" + invInput);
-        flavorTagsBox.setText("" + minInput);
+        requiredIngredientName.setCellValueFactory(new PropertyValueFactory<>("ingredientName"));
+        requiredIngredientStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        requiredIngredientPricePerEach.setCellValueFactory(new PropertyValueFactory<>("pricePerEach"));
+
+        recipeNameBox.setText("" + recipeNameInput);
+        recipeCostBox.setText("" + recipeCostInput);
+        recipeServingsBox.setText("" + recipeServingsInput);
+        flavorTagsBox.setText("" + flavorTagsInput);
 
     }
 
@@ -94,6 +96,8 @@ public class ModifyRecipeController implements Initializable {
 
         tempRequiredIngredients.add(selectedIngredient);
         requiredIngredientsTable.setItems(tempRequiredIngredients);
+        double tempRecipeCost = Double.parseDouble(recipeCostBox.getText()) + selectedIngredient.getPricePerEach();
+        recipeCostBox.setText("" + tempRecipeCost);
     }
 
     public void onRemoveRequiredIngredientClick(ActionEvent actionEvent) {
@@ -115,6 +119,8 @@ public class ModifyRecipeController implements Initializable {
 
         tempRequiredIngredients.remove(selectedIngredient);
         requiredIngredientsTable.setItems(tempRequiredIngredients);
+        double tempRecipeCost = Double.parseDouble(recipeCostBox.getText()) - selectedIngredient.getPricePerEach();
+        recipeCostBox.setText("" + tempRecipeCost);
     }
 
     public void onSaveClick(ActionEvent actionEvent) throws IOException {
@@ -140,11 +146,6 @@ public class ModifyRecipeController implements Initializable {
         } catch (NumberFormatException e) {
             errorCollector += "--Price/cost input must be a floating point number \n";
         }
-        try {
-            int minTestInput = Integer.parseInt(flavorTagsBox.getText());
-        } catch (NumberFormatException e) {
-            errorCollector += "--Min input must be an integer less than or equal to Max input \n";
-        }
 
         if (!errorCollector.isBlank()){
             Alert exceptionErrors = new Alert(Alert.AlertType.ERROR);
@@ -157,10 +158,10 @@ public class ModifyRecipeController implements Initializable {
 
         int invInput = Integer.parseInt(recipeServingsBox.getText());
         double priceCostInput = Double.parseDouble(recipeCostBox.getText());
-        int minInput = Integer.parseInt(flavorTagsBox.getText());
+        String flavorTagInput = flavorTagsBox.getText();
 
         Recipe recipe = new Recipe(nameInput, priceCostInput,
-                invInput, minInput);
+                invInput, flavorTagInput);
 
         for (Ingredient tempRequiredIngredient : tempRequiredIngredients) {
             recipe.addRequiredIngredient(tempRequiredIngredient);

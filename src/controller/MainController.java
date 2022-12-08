@@ -52,9 +52,9 @@ public class MainController implements Initializable {
         ingredientStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
         ingredientPricePerEach.setCellValueFactory(new PropertyValueFactory<>("pricePerEach"));
 
-        recipeName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        recipeServings.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        recipeCost.setCellValueFactory(new PropertyValueFactory<>("price"));
+        recipeName.setCellValueFactory(new PropertyValueFactory<>("recipeName"));
+        recipeServings.setCellValueFactory(new PropertyValueFactory<>("recipeServings"));
+        recipeCost.setCellValueFactory(new PropertyValueFactory<>("recipeCost"));
 
     }
 
@@ -143,7 +143,7 @@ public class MainController implements Initializable {
 
         Alert sureDeleteRecipe = new Alert(Alert.AlertType.CONFIRMATION);
         sureDeleteRecipe.setTitle("Recipes");
-        sureDeleteRecipe.setHeaderText("Delete Recipe: " + selectedRecipe.getName() + "?");
+        sureDeleteRecipe.setHeaderText("Delete Recipe: " + selectedRecipe.getRecipeName() + "?");
         sureDeleteRecipe.setContentText("Do you want to delete this recipe?");
         Optional<ButtonType> confirm = sureDeleteRecipe.showAndWait();
 
@@ -157,7 +157,7 @@ public class MainController implements Initializable {
 
                 Alert requiredIngredientRecipeError = new Alert(Alert.AlertType.ERROR);
                 requiredIngredientRecipeError.setTitle("Required Recipe Ingredient Error");
-                requiredIngredientRecipeError.setHeaderText("The recipe named " + selectedRecipe.getName() + ", has an ingredient it requires");
+                requiredIngredientRecipeError.setHeaderText("The recipe named " + selectedRecipe.getRecipeName() + ", has an ingredient it requires");
                 requiredIngredientRecipeError.setContentText("Please remove " + requiredIngredient.getIngredientName() +
                         "\nfrom the recipe before attempting to delete this recipe.\n" +
                         "Recipes with required ingredients cannot be deleted.");

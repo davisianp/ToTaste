@@ -56,7 +56,7 @@ public class Inventory {
         ObservableList<Recipe> recipeNames = FXCollections.observableArrayList();
         ObservableList<Recipe> allRecipes = Inventory.getAllRecipes();
         for (Recipe searchedRecipe : allRecipes) {
-            if (searchedRecipe.getName().contains(ingredientName)) {
+            if (searchedRecipe.getRecipeName().contains(ingredientName)) {
                 recipeNames.add(searchedRecipe);
             }
         }
@@ -77,7 +77,7 @@ public class Inventory {
     public static void updateRecipe(String searchName, Recipe recipe) {
         ObservableList<Recipe> allRecipes = Inventory.getAllRecipes();
         for (Recipe searchedForRecipe : allRecipes) {
-            if (Objects.equals(searchName, searchedForRecipe.getName())) {
+            if (Objects.equals(searchName, searchedForRecipe.getRecipeName())) {
                 allRecipes.remove(searchedForRecipe);
                 allRecipes.add(recipe);
                 break;
@@ -102,18 +102,24 @@ public class Inventory {
     }
 
     private static void addTestData() {
-        Perishable cap = new Perishable("Smoked Sausage", 4.50, 2, "lbs", 1, "01/21/2023");
-        Inventory.addIngredient(cap);
-        NonPerishable mod = new NonPerishable("Red Kidney Beans", 2.00, 4, "tbsps", 1, "02/24");
-        Inventory.addIngredient(mod);
-        NonPerishable fam = new NonPerishable("Long Grain Rice", 3.00, 1, "tsps", 20, "03/25");
-        Inventory.addIngredient(fam);
-        Recipe enc = new Recipe("Encabulator", 31200.50, 3, 1);
-        Inventory.addRecipe(enc);
-        Recipe slo = new Recipe("Slotted Stater", 450.33, 5, 2);
-        Inventory.addRecipe(slo);
-        Recipe pha = new Recipe("Phase Detractor", 1232.99, 10, 1);
-        Inventory.addRecipe(pha);
+        Perishable sage = new Perishable("Smoked Sausage", 4.50, 2, "lbs", 1, "01/21/2023");
+        Inventory.addIngredient(sage);
+        NonPerishable bean = new NonPerishable("Red Kidney Beans", 2.00, 4, "tbsps", 1, "02/24");
+        Inventory.addIngredient(bean);
+        NonPerishable rice = new NonPerishable("Long Grain Rice", 3.00, 1, "tsps", 20, "03/25");
+        Inventory.addIngredient(rice);
+        Recipe rbar = new Recipe("Red Beans and Rice", 0, 4, "spicy, zesty, smoky");
+        Inventory.addRecipe(rbar);
+        rbar.addRequiredIngredient(sage);
+        rbar.addRequiredIngredient(bean);
+        rbar.addRequiredIngredient(rice);
+        Recipe jamb = new Recipe("Jambalaya", 0, 4, "zesty, meaty, hearty");
+        Inventory.addRecipe(jamb);
+        jamb.addRequiredIngredient(sage);
+        jamb.addRequiredIngredient(rice);
+        Recipe soup = new Recipe("15 Bean Soup", 0, 4, "hammy, rich, hearty");
+        Inventory.addRecipe(soup);
+        soup.addRequiredIngredient(bean);
     }
 
     static {

@@ -7,51 +7,45 @@ import java.util.Objects;
 
 public class Recipe {
     private ObservableList<Ingredient> requiredIngredients = FXCollections.observableArrayList();
-    private String name;
-    private double price;
-    private int stock;
-    private int min;
-    private int max;
+    private String recipeName;
+    private double recipeCost;
+    private int recipeServings;
+    private String flavorTags;
 
-
-    public Recipe(String name, double price,
-                  int stock, int min){
-        this.name = name;
-        this.price = price;
-        this.stock = stock;
-        this.min = min;
+    public Recipe(String recipeName, double recipeCost,
+                  int recipeServings, String flavorTags){
+        this.recipeName = recipeName;
+        this.recipeCost = recipeCost;
+        this.recipeServings = recipeServings;
+        this.flavorTags = flavorTags;
     }
 
-    public void setName(String name){ this.name = name; }
+    public void setRecipeName(String recipeName){ this.recipeName = recipeName; }
 
-    public void setPrice(double price){ this.price = price; }
+    public void setRecipeServings(int recipeServings){ this.recipeServings = recipeServings; }
 
+    public void setFlavorTags(String flavorTags){ this.flavorTags = flavorTags; }
 
-    public void setStock(int stock){ this.stock = stock; }
-
-    public void setMin(int min){ this.min = min; }
-
-    public void setMax(int max){ this.max = max; }
-
-    public String getName() {
-        return name;
+    public String getRecipeName() {
+        return recipeName;
     }
 
-    public int getStock() {
-        return stock;
+    public int getRecipeServings() {
+        return recipeServings;
     }
 
-    public double getPrice() {
-        return price;
+    public double getRecipeCost() {
+        recipeCost = 0;
+        for (Ingredient requiredIngredient : requiredIngredients) {
+            recipeCost += requiredIngredient.getPricePerEach();
+        }
+        return recipeCost;
     }
 
-    public int getMin() {
-        return min;
+    public String getFlavorTags() {
+        return flavorTags;
     }
 
-    public int getMax() {
-        return max;
-    }
 
     public void addRequiredIngredient(Ingredient ingredient){
         requiredIngredients.add(ingredient);
@@ -60,7 +54,7 @@ public class Recipe {
     public boolean deleteRequiredIngredient(Ingredient selectedRequiredIngredient){
         for (int i = 0; i < Inventory.getAllRecipes().size(); ++i) {
             Recipe checkRecipe = Inventory.getAllRecipes().get(i);
-            if (Objects.equals(checkRecipe.getName(), name)) {
+            if (Objects.equals(checkRecipe.getRecipeName(), recipeName)) {
                 for (int j = 0; j < checkRecipe.getAllRequiredIngredients().size(); ++j) {
                     if (selectedRequiredIngredient == checkRecipe.requiredIngredients.get(j)) {
                         return false;
