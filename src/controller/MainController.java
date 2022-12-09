@@ -56,9 +56,13 @@ public class MainController implements Initializable {
         for(int i = 0; i < Inventory.getAllRecipes().size(); ++i){
             Recipe redoRecipe = Inventory.getAllRecipes().get(i);
             for(int j = redoRecipe.getAllRequiredIngredients().size() - 1; j >= 0; --j){
+                boolean isRequired = false;
                 Ingredient oldIngredient = redoRecipe.getAllRequiredIngredients().get(j);
                 for(int p = 0; p < Inventory.getAllIngredients().size(); ++p) {
                     Ingredient newIngredient = Inventory.getAllIngredients().get(p);
+                    if (oldIngredient.getId() == newIngredient.getId()){
+                        isRequired = true;
+                    }
                     if (oldIngredient.getId() == newIngredient.getId() && (
                             !Objects.equals(oldIngredient.getIngredientName(), newIngredient.getIngredientName()) ||
                                     oldIngredient.getPricePerEach() != newIngredient.getPricePerEach() ||
@@ -69,7 +73,12 @@ public class MainController implements Initializable {
                         redoRecipe.removeRequiredIngredient(oldIngredient);
                         redoRecipe.addRequiredIngredient(newIngredient);
                     }
+
+                    if (!isRequired && p == (Inventory.getAllIngredients().size() - 1)){
+                        redoRecipe.removeRequiredIngredient(oldIngredient);
+                    }
                 }
+
             }
         }
 
