@@ -55,22 +55,21 @@ public class MainController implements Initializable {
 
         for(int i = 0; i < Inventory.getAllRecipes().size(); ++i){
             Recipe redoRecipe = Inventory.getAllRecipes().get(i);
-            for(int j = 0; j < redoRecipe.getAllRequiredIngredients().size(); ++j){
+            for(int j = redoRecipe.getAllRequiredIngredients().size() - 1; j >= 0; --j){
                 Ingredient oldIngredient = redoRecipe.getAllRequiredIngredients().get(j);
-                    for(int p = 0; p < Inventory.getAllIngredients().size(); ++p) {
-                        Ingredient newIngredient = Inventory.getAllIngredients().get(p);
-                        if (oldIngredient.getId() == newIngredient.getId() && (
-                                !Objects.equals(oldIngredient.getIngredientName(), newIngredient.getIngredientName()) ||
-                                oldIngredient.getPricePerEach() != newIngredient.getPricePerEach() ||
-                                oldIngredient.getStock() != newIngredient.getStock() ||
-                                !Objects.equals(oldIngredient.getUnitOfMeasure(), newIngredient.getUnitOfMeasure()) ||
-                                oldIngredient.getServingsPerContainer() != newIngredient.getServingsPerContainer())
-                        ) {
-                            redoRecipe.removeRequiredIngredient(oldIngredient);
-                            redoRecipe.addRequiredIngredient(newIngredient);
-                            break;
-                        }
+                for(int p = 0; p < Inventory.getAllIngredients().size(); ++p) {
+                    Ingredient newIngredient = Inventory.getAllIngredients().get(p);
+                    if (oldIngredient.getId() == newIngredient.getId() && (
+                            !Objects.equals(oldIngredient.getIngredientName(), newIngredient.getIngredientName()) ||
+                                    oldIngredient.getPricePerEach() != newIngredient.getPricePerEach() ||
+                                    oldIngredient.getStock() != newIngredient.getStock() ||
+                                    !Objects.equals(oldIngredient.getUnitOfMeasure(), newIngredient.getUnitOfMeasure()) ||
+                                    oldIngredient.getServingsPerContainer() != newIngredient.getServingsPerContainer())
+                    ) {
+                        redoRecipe.removeRequiredIngredient(oldIngredient);
+                        redoRecipe.addRequiredIngredient(newIngredient);
                     }
+                }
             }
         }
 
