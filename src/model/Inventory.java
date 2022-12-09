@@ -75,6 +75,7 @@ public class Inventory {
     }
 
     public static void updateRecipe(String searchName, Recipe recipe) {
+
         ObservableList<Recipe> allRecipes = Inventory.getAllRecipes();
         for (Recipe searchedForRecipe : allRecipes) {
             if (Objects.equals(searchName, searchedForRecipe.getRecipeName())) {
@@ -102,11 +103,11 @@ public class Inventory {
     }
 
     private static void addTestData() {
-        Perishable sage = new Perishable("Smoked Sausage", 4.50, 2, "lbs", 1, "01/21/2023");
+        Perishable sage = new Perishable(1,"Smoked Sausage", 4.50, 2, "lbs", 1, "01/21/2023");
         Inventory.addIngredient(sage);
-        NonPerishable bean = new NonPerishable("Red Kidney Beans", 2.00, 4, "tbsps", 1, "02/24");
+        NonPerishable bean = new NonPerishable(2,"Red Kidney Beans", 2.00, 4, "tbsp", 1, "02/24");
         Inventory.addIngredient(bean);
-        NonPerishable rice = new NonPerishable("Long Grain Rice", 3.00, 1, "tsps", 20, "03/25");
+        NonPerishable rice = new NonPerishable(3,"Long Grain Rice", 3.00, 1, "tsp", 20, "03/25");
         Inventory.addIngredient(rice);
         Recipe rbar = new Recipe("Red Beans and Rice", 0, 4, "spicy, zesty, smoky");
         Inventory.addRecipe(rbar);
@@ -122,8 +123,18 @@ public class Inventory {
         soup.addRequiredIngredient(bean);
     }
 
+    public static int pickNewId(){
+        int checkId = -1;
+        for(int i = 0; i < getAllIngredients().size(); ++i){
+            Ingredient ingredientAtIndex = getAllIngredients().get(i);
+            if (checkId <= ingredientAtIndex.getId()){
+                checkId = ingredientAtIndex.getId();
+            }
+        }
+        return checkId;
+    }
+
     static {
         addTestData();
     }
-
 }

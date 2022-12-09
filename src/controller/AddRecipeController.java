@@ -60,7 +60,7 @@ public class AddRecipeController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 900, 400);
-        stage.setTitle("Inventory Management System");
+        stage.setTitle("To Taste: Main Screen");
         stage.setScene(scene);
         stage.show();
     }
@@ -148,7 +148,7 @@ public class AddRecipeController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 900, 400);
-        stage.setTitle("Inventory Management System");
+        stage.setTitle("To Taste: Main Screen");
         stage.setScene(scene);
         stage.show();
     }

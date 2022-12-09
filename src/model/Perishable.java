@@ -4,10 +4,10 @@ public class Perishable extends Ingredient {
 
     private String shortDate;
 
-    public Perishable(String ingredientName, double pricePerEach,
+    public Perishable(int id, String ingredientName, double pricePerEach,
                       int stock, String unitOfMeasure, int servingsPerContainer,
                       String shortDate) {
-        super(ingredientName, pricePerEach, stock, unitOfMeasure, servingsPerContainer);
+        super(id, ingredientName, pricePerEach, stock, unitOfMeasure, servingsPerContainer);
         this.shortDate = shortDate;
     }
 

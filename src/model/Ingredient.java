@@ -3,12 +3,15 @@ package model;
 
 public abstract class Ingredient {
 
+    private int id;
     private String ingredientName;
     private double pricePerEach;
     private int stock;
     private String unitOfMeasure;
     private int servingsPerContainer;
-    public Ingredient(String ingredientName, double pricePerEach, int stock, String unitOfMeasure, int servingsPerContainer) {
+
+    public Ingredient(int id, String ingredientName, double pricePerEach, int stock, String unitOfMeasure, int servingsPerContainer) {
+        this.id = id;
         this.ingredientName = ingredientName;
         this.pricePerEach = pricePerEach;
         this.stock = stock;
@@ -16,6 +19,8 @@ public abstract class Ingredient {
         this.servingsPerContainer = servingsPerContainer;
     }
 
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
     public String getIngredientName() {
         return ingredientName;
     }
@@ -54,6 +59,10 @@ public abstract class Ingredient {
 
     public void setServingsPerContainer(int servingsPerContainer) {
         this.servingsPerContainer = servingsPerContainer;
+    }
+
+    public String getConcatPriceUnit() {
+        return "$" + String.format("%.2f", pricePerEach) + " per " + unitOfMeasure;
     }
 
 }

@@ -52,7 +52,7 @@ public class AddIngredientController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 900, 400);
-        stage.setTitle("Inventory Management System");
+        stage.setTitle("To Taste: Main Screen");
         stage.setScene(scene);
         stage.show();
     }
@@ -90,6 +90,7 @@ public class AddIngredientController implements Initializable {
             return;
         }
 
+        int idInput = Inventory.pickNewId();
         int stockInput = Integer.parseInt(stockBox.getText());
         double priceEachInput = Double.parseDouble(pricePerEachBox.getText());
         String unitTypeInput = unitOfMeasureBox.getText();
@@ -106,13 +107,13 @@ public class AddIngredientController implements Initializable {
                 shortDateEmptyAlert.showAndWait();
                 return;
             }
-            Perishable part = new Perishable(nameInput, priceEachInput,
+            Perishable part = new Perishable(idInput, nameInput, priceEachInput,
                     stockInput, unitTypeInput, servingsNumberInput, shortDateInput);
             Inventory.addIngredient(part);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 900, 400);
-            stage.setTitle("Inventory Management System");
+            stage.setTitle("To Taste: Main Screen");
             stage.setScene(scene);
             stage.show();
         }
@@ -128,13 +129,13 @@ public class AddIngredientController implements Initializable {
                 return;
             }
 
-            NonPerishable part = new NonPerishable(nameInput, priceEachInput,
+            NonPerishable part = new NonPerishable(idInput, nameInput, priceEachInput,
                     stockInput, unitTypeInput, servingsNumberInput, longDateInput);
             Inventory.addIngredient(part);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 900, 400);
-            stage.setTitle("Inventory Management System");
+            stage.setTitle("To Taste: Main Screen");
             stage.setScene(scene);
             stage.show();
         }

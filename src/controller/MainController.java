@@ -17,6 +17,7 @@ import model.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -25,24 +26,24 @@ public class MainController implements Initializable {
     public Label ingredientInventory;
     public TableView<Recipe> inventoryRecipeTable;
     public TableView<Ingredient> inventoryIngredientTable;
-    public Label recipeInventory;
     public TableColumn<Ingredient,?> ingredientName;
     public TableColumn<Ingredient,?> ingredientStock;
-    public TableColumn<Ingredient,?> ingredientPricePerEach;
+    public TableColumn<Ingredient, ?> ingredientPriceUnitCombo;
+    public Label recipeInventory;
     public TableColumn<Recipe, ?> recipeName;
     public TableColumn<Recipe, ?> recipeServings;
     public TableColumn<Recipe, ?> recipeCost;
     public TextField queryIngredients;
     public TextField queryRecipes;
-    public Label addRecipeLabel;
     public Label errorRecipeBox;
     public Label errorIngredientBox;
+    public Label titleLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ingredientInventory.setText("Parts");
+        ingredientInventory.setText("Ingredients");
         ingredientInventory.setFont(Font.font("system", FontWeight.BOLD, FontPosture.REGULAR, 12));
-        recipeInventory.setText("Products");
+        recipeInventory.setText("Recipes");
         recipeInventory.setFont(Font.font("system", FontWeight.BOLD, FontPosture.REGULAR, 12));
 
         inventoryIngredientTable.setItems(Inventory.getAllIngredients());
@@ -50,7 +51,28 @@ public class MainController implements Initializable {
 
         ingredientName.setCellValueFactory(new PropertyValueFactory<>("ingredientName"));
         ingredientStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        ingredientPricePerEach.setCellValueFactory(new PropertyValueFactory<>("pricePerEach"));
+        ingredientPriceUnitCombo.setCellValueFactory(new PropertyValueFactory<>("concatPriceUnit"));
+
+        for(int i = 0; i < Inventory.getAllRecipes().size(); ++i){
+            Recipe redoRecipe = Inventory.getAllRecipes().get(i);
+            for(int j = 0; j < redoRecipe.getAllRequiredIngredients().size(); ++j){
+                Ingredient oldIngredient = redoRecipe.getAllRequiredIngredients().get(j);
+                    for(int p = 0; p < Inventory.getAllIngredients().size(); ++p) {
+                        Ingredient newIngredient = Inventory.getAllIngredients().get(p);
+                        if (oldIngredient.getId() == newIngredient.getId() && (
+                                !Objects.equals(oldIngredient.getIngredientName(), newIngredient.getIngredientName()) ||
+                                oldIngredient.getPricePerEach() != newIngredient.getPricePerEach() ||
+                                oldIngredient.getStock() != newIngredient.getStock() ||
+                                !Objects.equals(oldIngredient.getUnitOfMeasure(), newIngredient.getUnitOfMeasure()) ||
+                                oldIngredient.getServingsPerContainer() != newIngredient.getServingsPerContainer())
+                        ) {
+                            redoRecipe.removeRequiredIngredient(oldIngredient);
+                            redoRecipe.addRequiredIngredient(newIngredient);
+                            break;
+                        }
+                    }
+            }
+        }
 
         recipeName.setCellValueFactory(new PropertyValueFactory<>("recipeName"));
         recipeServings.setCellValueFactory(new PropertyValueFactory<>("recipeServings"));
@@ -105,7 +127,7 @@ public class MainController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 900, 400);
-        stage.setTitle("Inventory Management System");
+        stage.setTitle("To Taste: Main Screen");
         stage.setScene(scene);
         stage.show();
     }
@@ -170,7 +192,7 @@ public class MainController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 900, 400);
-        stage.setTitle("Inventory Management System");
+        stage.setTitle("To Taste: Main Screen");
         stage.setScene(scene);
         stage.show();
     }

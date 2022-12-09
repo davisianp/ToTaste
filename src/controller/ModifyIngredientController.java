@@ -34,7 +34,9 @@ public class ModifyIngredientController implements Initializable {
     public Label toggleTextSwitch;
     public ToggleGroup perishableStateGroup;
 
+    private static int idInput;
     private static String ingredientNameInput;
+    private static String initialNameInput;
     private static int stockInput;
     private static double priceEachInput;
     private static int servingsNumberInput;
@@ -44,7 +46,9 @@ public class ModifyIngredientController implements Initializable {
 
     public static void setInitialModifyIngredient(Ingredient selectedIngredient) {
 
+        idInput = selectedIngredient.getId();
         ingredientNameInput = selectedIngredient.getIngredientName();
+        initialNameInput = selectedIngredient.getIngredientName();
         stockInput = selectedIngredient.getStock();
         priceEachInput = selectedIngredient.getPricePerEach();
         servingsNumberInput = selectedIngredient.getServingsPerContainer();
@@ -92,7 +96,7 @@ public class ModifyIngredientController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 900, 400);
-        stage.setTitle("Inventory Management System");
+        stage.setTitle("To Taste: Main Screen");
         stage.setScene(scene);
         stage.show();
     }
@@ -146,13 +150,13 @@ public class ModifyIngredientController implements Initializable {
                 shortDateEmptyAlert.showAndWait();
                 return;
             }
-            Perishable part = new Perishable(nameInput, priceEachInput,
+            Perishable perishIngredient = new Perishable(idInput, nameInput, priceEachInput,
                     stockInput, unitTypeInput, servingsNumberInput, shortDateInput);
-            Inventory.updateIngredient(nameInput, part);
+            Inventory.updateIngredient(initialNameInput, perishIngredient);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 900, 400);
-            stage.setTitle("Inventory Management System");
+            stage.setTitle("To Taste: Main Screen");
             stage.setScene(scene);
             stage.show();
         }
@@ -167,13 +171,13 @@ public class ModifyIngredientController implements Initializable {
                 return;
             }
 
-            NonPerishable part = new NonPerishable(nameInput, priceEachInput,
+            NonPerishable nonPerishIngredient = new NonPerishable(idInput, nameInput, priceEachInput,
                     stockInput, unitTypeInput, servingsNumberInput, longDateInput);
-            Inventory.updateIngredient(nameInput, part);
+            Inventory.updateIngredient(initialNameInput, nonPerishIngredient);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 900, 400);
-            stage.setTitle("Inventory Management System");
+            stage.setTitle("To Taste: Main Screen");
             stage.setScene(scene);
             stage.show();
         }

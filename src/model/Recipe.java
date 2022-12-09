@@ -50,6 +50,7 @@ public class Recipe {
     public void addRequiredIngredient(Ingredient ingredient){
         requiredIngredients.add(ingredient);
     }
+    public void removeRequiredIngredient(Ingredient ingredient) { requiredIngredients.remove(ingredient); }
 
     public boolean deleteRequiredIngredient(Ingredient selectedRequiredIngredient){
         for (int i = 0; i < Inventory.getAllRecipes().size(); ++i) {
