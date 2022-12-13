@@ -40,11 +40,11 @@ public class AddIngredientController implements Initializable {
     }
 
     public void toggleNonPerishable(ActionEvent actionEvent) {
-        toggleTextSwitch.setText("Short Expiration Date \n(MM/YYYY)");
+        toggleTextSwitch.setText("Long Expiration Date \n(MM/YYYY)");
     }
 
     public void togglePerishable(ActionEvent actionEvent) {
-        toggleTextSwitch.setText("Long Expiration Date \n(MM/DD/YYYY)");
+        toggleTextSwitch.setText("Short Expiration Date \n(MM/DD/YYYY)");
     }
 
     @FXML
@@ -102,9 +102,17 @@ public class AddIngredientController implements Initializable {
             if(shortDateInput.isBlank()){
                 Alert shortDateEmptyAlert = new Alert(Alert.AlertType.ERROR);
                 shortDateEmptyAlert.setTitle("Short Date Field Is Empty");
-                shortDateEmptyAlert.setHeaderText("Short date field must have a value of MM/YYYY");
-                shortDateEmptyAlert.setContentText("Please enter a valid date with month and year format.");
+                shortDateEmptyAlert.setHeaderText("Short date field must have a value of MM/DD/YYYY");
+                shortDateEmptyAlert.setContentText("Please enter a valid date with month, day, and year format.");
                 shortDateEmptyAlert.showAndWait();
+                return;
+            }
+            if(!shortDateInput.matches("(?:0[1-9]|1[012])[-/.](?:0[1-9]|[12][0-9]|3[01])[-/.](?:20\\d{2}|20[01][0-9]|2100)")){
+                Alert shortDateIncorrectAlert = new Alert(Alert.AlertType.ERROR);
+                shortDateIncorrectAlert.setTitle("Short Date Input Is Incorrect");
+                shortDateIncorrectAlert.setHeaderText("Short date field must have a value of MM/DD/YYYY");
+                shortDateIncorrectAlert.setContentText("Please enter a valid date with month, day, and year format.");
+                shortDateIncorrectAlert.showAndWait();
                 return;
             }
             Perishable part = new Perishable(idInput, nameInput, priceEachInput,
@@ -123,9 +131,17 @@ public class AddIngredientController implements Initializable {
             if(longDateInput.isBlank()){
                 Alert longDateEmptyAlert = new Alert(Alert.AlertType.ERROR);
                 longDateEmptyAlert.setTitle("Long Date Field Is Empty");
-                longDateEmptyAlert.setHeaderText("Long date field must have a value of MM/DD/YYYY");
-                longDateEmptyAlert.setContentText("Please enter a valid date with month, day, year format.");
+                longDateEmptyAlert.setHeaderText("Long date field must have a value of MM/YYYY");
+                longDateEmptyAlert.setContentText("Please enter a valid date with month and year format.");
                 longDateEmptyAlert.showAndWait();
+                return;
+            }
+            if(!longDateInput.matches("(?:0[1-9]|1[012])[-/.](?:20\\d{2}|20[01][0-9]|2100)")){
+                Alert longDateIncorrectAlert = new Alert(Alert.AlertType.ERROR);
+                longDateIncorrectAlert.setTitle("Long Date Input Is Incorrect");
+                longDateIncorrectAlert.setHeaderText("Long date field must have a value of MM/YYYY");
+                longDateIncorrectAlert.setContentText("Please enter a valid date with month and year format.");
+                longDateIncorrectAlert.showAndWait();
                 return;
             }
 

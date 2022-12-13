@@ -8,38 +8,32 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddIngredientController">
+<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddIngredientController">
     <children>
-        <Button layoutX="517.0" layoutY="348.0" onAction="#onCancelClick" text="Cancel" />
+        <Button layoutX="497.0" layoutY="228.0" onAction="#onCancelClick" text="Cancel" />
 
-        <Label fx:id="addIngredientLabel" layoutX="45.0" layoutY="29.0" prefHeight="43.0" prefWidth="101.0" text="Add Part">
+        <Label fx:id="addIngredientLabel" layoutX="45.0" layoutY="29.0" prefHeight="43.0" prefWidth="148.0" text="Add Ingredient">
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Label>
-      <RadioButton fx:id="perishableRadio" layoutX="173.0" layoutY="42.0" mnemonicParsing="false" onAction="#togglePerishable" prefHeight="17.0" prefWidth="101.0" selected="true" text="In-House">
+      <RadioButton fx:id="perishableRadio" layoutX="44.0" layoutY="196.0" mnemonicParsing="false" onAction="#togglePerishable" prefHeight="17.0" prefWidth="101.0" selected="true" text="Perishable">
          <toggleGroup>
             <ToggleGroup fx:id="perishableStateGroup" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="nonPerishableRadio" layoutX="290.0" layoutY="42.0" mnemonicParsing="false" onAction="#toggleNonPerishable" prefHeight="17.0" prefWidth="108.0" text="Outsourced" toggleGroup="$perishableStateGroup" />
-      <TextField disable="true" editable="false" layoutX="181.0" layoutY="98.0" prefHeight="25.0" prefWidth="117.0" text="Auto Gen- Disabled">
-         <font>
-            <Font name="System Italic" size="12.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="ingredientNameBox" layoutX="181.0" layoutY="139.0" prefHeight="25.0" prefWidth="117.0" />
-      <TextField fx:id="stockBox" layoutX="181.0" layoutY="175.0" prefHeight="25.0" prefWidth="117.0" />
-      <TextField fx:id="pricePerEachBox" layoutX="181.0" layoutY="211.0" prefHeight="25.0" prefWidth="117.0" />
-      <TextField fx:id="servingsPerContainerBox" layoutX="181.0" layoutY="247.0" prefHeight="25.0" prefWidth="117.0" />
-      <TextField fx:id="unitOfMeasureBox" layoutX="398.0" layoutY="247.0" prefHeight="25.0" prefWidth="117.0" />
-      <TextField fx:id="switchBox" layoutX="181.0" layoutY="283.0" prefHeight="25.0" prefWidth="117.0" />
-      <Label layoutX="70.0" layoutY="98.0" prefHeight="25.0" prefWidth="52.0" text="ID" />
-      <Label layoutX="70.0" layoutY="139.0" prefHeight="25.0" prefWidth="52.0" text="Name" />
-      <Label layoutX="70.0" layoutY="175.0" prefHeight="25.0" prefWidth="52.0" text="Inv" />
-      <Label layoutX="70.0" layoutY="211.0" prefHeight="25.0" prefWidth="75.0" text="Price/Cost" />
-      <Label layoutX="70.0" layoutY="247.0" prefHeight="25.0" prefWidth="75.0" text="Max" />
-      <Label layoutX="323.0" layoutY="247.0" prefHeight="25.0" prefWidth="75.0" text="Min" />
-      <Label fx:id="toggleTextSwitch" layoutX="70.0" layoutY="283.0" prefHeight="25.0" prefWidth="101.0" text="In or Out Switch" />
-      <Button layoutX="457.0" layoutY="348.0" onAction="#onSaveClick" prefHeight="25.0" prefWidth="52.0" text="Save" />
+      <RadioButton fx:id="nonPerishableRadio" layoutX="156.0" layoutY="196.0" mnemonicParsing="false" onAction="#toggleNonPerishable" prefHeight="17.0" prefWidth="108.0" text="Non-Perishable" toggleGroup="$perishableStateGroup" />
+      <TextField fx:id="ingredientNameBox" layoutX="156.0" layoutY="81.0" prefHeight="25.0" prefWidth="117.0" />
+      <TextField fx:id="stockBox" layoutX="156.0" layoutY="116.0" prefHeight="25.0" prefWidth="117.0" />
+      <TextField fx:id="pricePerEachBox" layoutX="434.0" layoutY="81.0" prefHeight="25.0" prefWidth="117.0" />
+      <TextField fx:id="servingsPerContainerBox" layoutX="434.0" layoutY="116.0" prefHeight="25.0" prefWidth="117.0" />
+      <TextField fx:id="unitOfMeasureBox" layoutX="434.0" layoutY="151.0" prefHeight="25.0" prefWidth="117.0" />
+      <TextField fx:id="switchBox" layoutX="156.0" layoutY="228.0" prefHeight="25.0" prefWidth="117.0" />
+      <Label layoutX="45.0" layoutY="81.0" prefHeight="25.0" prefWidth="108.0" text="Ingredient Name" />
+      <Label layoutX="45.0" layoutY="116.0" prefHeight="25.0" prefWidth="108.0" text="Current Stock" />
+      <Label layoutX="314.0" layoutY="81.0" prefHeight="25.0" prefWidth="117.0" text="Price Per Each Serving" />
+      <Label layoutX="314.0" layoutY="116.0" prefHeight="25.0" prefWidth="117.0" text="Servings In Container" />
+      <Label layoutX="314.0" layoutY="151.0" prefHeight="25.0" prefWidth="117.0" text="Unit of Measurement" />
+      <Label fx:id="toggleTextSwitch" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="32.0" layoutY="219.0" prefHeight="43.0" prefWidth="117.0" text="Expiration Date" textAlignment="RIGHT" />
+      <Button layoutX="437.0" layoutY="228.0" onAction="#onSaveClick" prefHeight="25.0" prefWidth="52.0" text="Save" />
     </children>
 </AnchorPane>

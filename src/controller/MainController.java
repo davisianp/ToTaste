@@ -53,38 +53,42 @@ public class MainController implements Initializable {
         ingredientStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
         ingredientPriceUnitCombo.setCellValueFactory(new PropertyValueFactory<>("concatPriceUnit"));
 
-        for(int i = 0; i < Inventory.getAllRecipes().size(); ++i){
+        for(int i = 0; i < Inventory.getAllRecipes().size(); ++i){ // change this to remove delete ingredient == remove ingredient from recipe
             Recipe redoRecipe = Inventory.getAllRecipes().get(i);
             for(int j = redoRecipe.getAllRequiredIngredients().size() - 1; j >= 0; --j){
                 boolean isRequired = false;
                 Ingredient oldIngredient = redoRecipe.getAllRequiredIngredients().get(j);
-                for(int p = 0; p < Inventory.getAllIngredients().size(); ++p) {
-                    Ingredient newIngredient = Inventory.getAllIngredients().get(p);
-                    if (oldIngredient.getId() == newIngredient.getId()){
-                        isRequired = true;
-                    }
-                    if (oldIngredient.getId() == newIngredient.getId() && (
-                            !Objects.equals(oldIngredient.getIngredientName(), newIngredient.getIngredientName()) ||
-                                    oldIngredient.getPricePerEach() != newIngredient.getPricePerEach() ||
-                                    oldIngredient.getStock() != newIngredient.getStock() ||
-                                    !Objects.equals(oldIngredient.getUnitOfMeasure(), newIngredient.getUnitOfMeasure()) ||
-                                    oldIngredient.getServingsPerContainer() != newIngredient.getServingsPerContainer())
-                    ) {
-                        redoRecipe.removeRequiredIngredient(oldIngredient);
-                        redoRecipe.addRequiredIngredient(newIngredient);
-                    }
+                if (Inventory.getAllIngredients().size() > 0) {
+                    for (int p = 0; p < Inventory.getAllIngredients().size(); ++p) {
+                        Ingredient newIngredient = Inventory.getAllIngredients().get(p);
+                        if (oldIngredient.getId() == newIngredient.getId()) {
+                            isRequired = true;
+                            }
+                        if (oldIngredient.getId() == newIngredient.getId() && (
+                                !Objects.equals(oldIngredient.getIngredientName(), newIngredient.getIngredientName()) ||
+                                        oldIngredient.getPricePerEach() != newIngredient.getPricePerEach() ||
+                                        oldIngredient.getStock() != newIngredient.getStock() ||
+                                        !Objects.equals(oldIngredient.getUnitOfMeasure(), newIngredient.getUnitOfMeasure()) ||
+                                        oldIngredient.getServingsPerContainer() != newIngredient.getServingsPerContainer())
+                        ) {
+                            redoRecipe.removeRequiredIngredient(oldIngredient);
+                            redoRecipe.addRequiredIngredient(newIngredient);
+                            }
 
-                    if (!isRequired && p == (Inventory.getAllIngredients().size() - 1)){
-                        redoRecipe.removeRequiredIngredient(oldIngredient);
+                        if (!isRequired && p == (Inventory.getAllIngredients().size() - 1)) {
+                            redoRecipe.removeRequiredIngredient(oldIngredient);
+                            }
+                        }
                     }
+                else {
+                    redoRecipe.removeRequiredIngredient(oldIngredient);
                 }
-
             }
         }
 
         recipeName.setCellValueFactory(new PropertyValueFactory<>("recipeName"));
         recipeServings.setCellValueFactory(new PropertyValueFactory<>("recipeServings"));
-        recipeCost.setCellValueFactory(new PropertyValueFactory<>("recipeCost"));
+        recipeCost.setCellValueFactory(new PropertyValueFactory<>("recipeCost"));;
 
     }
 
@@ -92,7 +96,7 @@ public class MainController implements Initializable {
     public void onAddIngredientClick(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/AddIngredient.fxml"));
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 600, 300);
         stage.setTitle("Add Ingredient Form");
         stage.setScene(scene);
         stage.show();

@@ -105,9 +105,9 @@ public class Inventory {
     private static void addTestData() {
         Perishable sage = new Perishable(1,"Smoked Sausage", 4.50, 2, "lbs", 1, "01/21/2023");
         Inventory.addIngredient(sage);
-        NonPerishable bean = new NonPerishable(2,"Red Kidney Beans", 2.00, 4, "tbsp", 1, "02/24");
+        NonPerishable bean = new NonPerishable(2,"Red Kidney Beans", 2.00, 4, "can", 1, "02/2024");
         Inventory.addIngredient(bean);
-        NonPerishable rice = new NonPerishable(3,"Long Grain Rice", 3.00, 1, "tsp", 20, "03/25");
+        NonPerishable rice = new NonPerishable(3,"Long Grain Rice", 3.00, 1, "quarter cup", 20, "03/2025");
         Inventory.addIngredient(rice);
         Recipe rbar = new Recipe("Red Beans and Rice", 0, 4, "spicy, zesty, smoky");
         Inventory.addRecipe(rbar);

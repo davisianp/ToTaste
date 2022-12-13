@@ -34,12 +34,12 @@ public class Recipe {
         return recipeServings;
     }
 
-    public double getRecipeCost() {
+    public String getRecipeCost() {
         recipeCost = 0;
         for (Ingredient requiredIngredient : requiredIngredients) {
             recipeCost += requiredIngredient.getPricePerEach();
         }
-        return recipeCost;
+        return "$" + String.format("%.2f", recipeCost);
     }
 
     public String getFlavorTags() {
