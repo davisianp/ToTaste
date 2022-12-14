@@ -103,20 +103,10 @@ public class AddRecipeController implements Initializable {
     public void onSaveClick(ActionEvent actionEvent) throws IOException {
         String errorCollector = "";
 
-        String nameInput = recipeNameBox.getText();
-        if(nameInput.isBlank()){
-            Alert nameBlankError = new Alert(Alert.AlertType.ERROR);
-            nameBlankError.setTitle("Name Field Is Empty");
-            nameBlankError.setHeaderText("Name field must have a string value");
-            nameBlankError.setContentText("Please enter a name using letters/numbers/spaces only");
-            nameBlankError.showAndWait();
-            return;
-        }
-
         try {
             int invTestInput = Integer.parseInt(recipeServingsBox.getText());
         } catch (NumberFormatException e) {
-            errorCollector += "--Inv input must be an integer between Min and Max values \n";
+            errorCollector += "--Servings input must be an integer greater than 0 \n";
         }
 
         if (!errorCollector.isBlank()){
@@ -128,6 +118,15 @@ public class AddRecipeController implements Initializable {
             return;
         }
 
+        String nameInput = recipeNameBox.getText();
+        if(nameInput.isBlank()){
+            Alert nameBlankError = new Alert(Alert.AlertType.ERROR);
+            nameBlankError.setTitle("Name Field Is Empty");
+            nameBlankError.setHeaderText("Name field must have a string value");
+            nameBlankError.setContentText("Please enter a name using letters/numbers/spaces only");
+            nameBlankError.showAndWait();
+            return;
+        }
         int invInput = Integer.parseInt(recipeServingsBox.getText());
         double priceCostInput = Double.parseDouble(recipeCostBox.getText(1,4));
         String flavorTagInput = flavorTagsBox.getText();

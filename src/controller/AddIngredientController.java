@@ -60,16 +60,6 @@ public class AddIngredientController implements Initializable {
     public void onSaveClick(ActionEvent actionEvent) throws IOException {
         String errorCollector = "";
 
-        String nameInput = ingredientNameBox.getText();
-        if(nameInput.isBlank()){
-            Alert nameBlankError = new Alert(Alert.AlertType.ERROR);
-            nameBlankError.setTitle("Ingredient Name Field Is Empty");
-            nameBlankError.setHeaderText("Ingredient name field must have a string value");
-            nameBlankError.setContentText("Please enter a name using letters/numbers/spaces only");
-            nameBlankError.showAndWait();
-            return;
-        }
-
         try {
             double priceCostTestInput = Double.parseDouble(pricePerEachBox.getText());
         } catch (NumberFormatException e) {
@@ -90,10 +80,29 @@ public class AddIngredientController implements Initializable {
             return;
         }
 
+        String nameInput = ingredientNameBox.getText();
+        if(nameInput.isBlank()){
+            Alert nameBlankError = new Alert(Alert.AlertType.ERROR);
+            nameBlankError.setTitle("Ingredient Name Field Is Empty");
+            nameBlankError.setHeaderText("Ingredient name field must have a string value");
+            nameBlankError.setContentText("Please enter a name using letters/numbers/spaces only");
+            nameBlankError.showAndWait();
+            return;
+        }
+
+        String unitTypeInput = unitOfMeasureBox.getText();
+        if(unitTypeInput.isBlank()){
+            Alert unitTypeBlankError = new Alert(Alert.AlertType.ERROR);
+            unitTypeBlankError.setTitle("Unit Of Measurement Field Is Empty");
+            unitTypeBlankError.setHeaderText("Unit of measurement field must have a string value");
+            unitTypeBlankError.setContentText("Please enter a type of measurement used for this ingredient using letters/numbers/spaces only");
+            unitTypeBlankError.showAndWait();
+            return;
+        }
+
         int idInput = Inventory.pickNewId();
         int stockInput = Integer.parseInt(stockBox.getText());
         double priceEachInput = Double.parseDouble(pricePerEachBox.getText());
-        String unitTypeInput = unitOfMeasureBox.getText();
         int servingsNumberInput = Integer.parseInt(servingsPerContainerBox.getText());
 
         if (perishableRadio.isSelected()) {
@@ -115,9 +124,9 @@ public class AddIngredientController implements Initializable {
                 shortDateIncorrectAlert.showAndWait();
                 return;
             }
-            Perishable part = new Perishable(idInput, nameInput, priceEachInput,
+            Perishable ingredient = new Perishable(idInput, nameInput, priceEachInput,
                     stockInput, unitTypeInput, servingsNumberInput, shortDateInput);
-            Inventory.addIngredient(part);
+            Inventory.addIngredient(ingredient);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 900, 400);
@@ -145,9 +154,9 @@ public class AddIngredientController implements Initializable {
                 return;
             }
 
-            NonPerishable part = new NonPerishable(idInput, nameInput, priceEachInput,
+            NonPerishable ingredient = new NonPerishable(idInput, nameInput, priceEachInput,
                     stockInput, unitTypeInput, servingsNumberInput, longDateInput);
-            Inventory.addIngredient(part);
+            Inventory.addIngredient(ingredient);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 900, 400);
