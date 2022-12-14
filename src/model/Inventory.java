@@ -17,50 +17,37 @@ public class Inventory {
         ALL_RECIPES.add(recipe);
     }
 
-    /*public static Ingredient lookupIngredient(int recipeId) {
-        ObservableList<Ingredient> allIngredients = Inventory.getAllIngredients();
-
-        for (Ingredient searchedForIngredient : allIngredients) {
-            if (recipeId == searchedForIngredient.getName()) {
-                return searchedForIngredient;
-            }
-        }
-        return null;
-    }
-
-    public static Recipe lookupRecipe(int recipeId) {
-        ObservableList<Recipe> allRecipes = Inventory.getAllRecipes();
-
-        for (Recipe searchedForRecipe : allRecipes) {
-            if (recipeId == searchedForRecipe.getId()) {
-                return searchedForRecipe;
-            }
-        }
-        return null;
-    }
-
-     */
-
     public static ObservableList<Ingredient> lookupIngredient(String ingredientName) {
         ObservableList<Ingredient> ingredientNames = FXCollections.observableArrayList();
         ObservableList<Ingredient> allIngredients = Inventory.getAllIngredients();
         for (Ingredient searchedIngredient : allIngredients) {
-            if (searchedIngredient.getIngredientName().contains(ingredientName)) {
+            if (searchedIngredient.getIngredientName().toLowerCase().contains(ingredientName.toLowerCase())) {
                 ingredientNames.add(searchedIngredient);
             }
         }
         return ingredientNames;
     }
 
-    public static ObservableList<Recipe> lookupRecipe(String ingredientName) {
-        ObservableList<Recipe> recipeNames = FXCollections.observableArrayList();
+    public static ObservableList<Recipe> lookupRecipe(String recipeName) {
+        ObservableList<Recipe> recipeSearch = FXCollections.observableArrayList();
         ObservableList<Recipe> allRecipes = Inventory.getAllRecipes();
         for (Recipe searchedRecipe : allRecipes) {
-            if (searchedRecipe.getRecipeName().contains(ingredientName)) {
-                recipeNames.add(searchedRecipe);
+            String[] searchedRecipeFlavorTags = searchedRecipe.getFlavorTags().split(",\s");
+            boolean noRepeat = true;
+            for (String searchedRecipeFlavorTag : searchedRecipeFlavorTags) {
+                if (recipeName.equalsIgnoreCase(searchedRecipeFlavorTag)) {
+                    recipeSearch.add(searchedRecipe);
+                    if (searchedRecipe.getRecipeName().equalsIgnoreCase(searchedRecipeFlavorTag)){
+                        noRepeat = false;
+                    }
+                    break;
+                }
+            }
+            if (searchedRecipe.getRecipeName().toLowerCase().contains(recipeName.toLowerCase()) && noRepeat){
+                recipeSearch.add(searchedRecipe);
             }
         }
-        return recipeNames;
+        return recipeSearch;
     }
 
     public static void updateIngredient(String searchName, Ingredient ingredient) {
@@ -76,6 +63,7 @@ public class Inventory {
 
     public static void updateRecipe(String searchName, Recipe recipe) {
 
+        System.out.println(searchName);
         ObservableList<Recipe> allRecipes = Inventory.getAllRecipes();
         for (Recipe searchedForRecipe : allRecipes) {
             if (Objects.equals(searchName, searchedForRecipe.getRecipeName())) {

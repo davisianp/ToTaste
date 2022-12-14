@@ -171,7 +171,7 @@ public class ModifyRecipeController implements Initializable {
             recipe.addRequiredIngredient(tempRequiredIngredient);
         }
 
-        Inventory.updateRecipe(nameInput, recipe);
+        Inventory.updateRecipe(recipeNameInput, recipe);
         Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 900, 400);
