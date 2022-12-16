@@ -27,7 +27,7 @@ public class MainController implements Initializable {
     public TableView<Recipe> inventoryRecipeTable;
     public TableView<Ingredient> inventoryIngredientTable;
     public TableColumn<Ingredient,?> ingredientName;
-    public TableColumn<Ingredient,?> ingredientStock;
+    public TableColumn<Ingredient,?> ingredientNumberOfUnits;
     public TableColumn<Ingredient, ?> ingredientPriceUnitCombo;
     public Label recipeInventory;
     public TableColumn<Recipe, ?> recipeName;
@@ -46,13 +46,27 @@ public class MainController implements Initializable {
         recipeInventory.setText("Recipes");
         recipeInventory.setFont(Font.font("system", FontWeight.BOLD, FontPosture.REGULAR, 12));
 
+        for (int i = 0; i < Inventory.getAllIngredients().size(); ++i){
+            Ingredient currentIngredient = Inventory.getAllIngredients().get(i);
+            currentIngredient.setNumberOfUnits(Inventory.countNumOfUnits(currentIngredient));
+        }
+
         inventoryIngredientTable.setItems(Inventory.getAllIngredients());
         inventoryRecipeTable.setItems(Inventory.getAllRecipes());
 
         ingredientName.setCellValueFactory(new PropertyValueFactory<>("ingredientName"));
-        ingredientStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        ingredientNumberOfUnits.setCellValueFactory(new PropertyValueFactory<>("numberOfUnits"));
         ingredientPriceUnitCombo.setCellValueFactory(new PropertyValueFactory<>("concatPriceUnit"));
 
+        resetInformation();
+
+        recipeName.setCellValueFactory(new PropertyValueFactory<>("recipeName"));
+        recipeServings.setCellValueFactory(new PropertyValueFactory<>("recipeServings"));
+        recipeCost.setCellValueFactory(new PropertyValueFactory<>("recipeCost"));;
+
+    }
+
+    public void resetInformation() {
         for(int i = 0; i < Inventory.getAllRecipes().size(); ++i){ // change this to remove delete ingredient == remove ingredient from recipe
             Recipe redoRecipe = Inventory.getAllRecipes().get(i);
             for(int j = redoRecipe.getAllRequiredIngredients().size() - 1; j >= 0; --j){
@@ -63,33 +77,28 @@ public class MainController implements Initializable {
                         Ingredient newIngredient = Inventory.getAllIngredients().get(p);
                         if (oldIngredient.getId() == newIngredient.getId()) {
                             isRequired = true;
-                            }
+                        }
                         if (oldIngredient.getId() == newIngredient.getId() && (
                                 !Objects.equals(oldIngredient.getIngredientName(), newIngredient.getIngredientName()) ||
                                         oldIngredient.getPricePerEach() != newIngredient.getPricePerEach() ||
-                                        oldIngredient.getStock() != newIngredient.getStock() ||
+                                        oldIngredient.getNumberOfUnits() != newIngredient.getNumberOfUnits() ||
                                         !Objects.equals(oldIngredient.getUnitOfMeasure(), newIngredient.getUnitOfMeasure()) ||
                                         oldIngredient.getServingsPerContainer() != newIngredient.getServingsPerContainer())
                         ) {
                             redoRecipe.removeRequiredIngredient(oldIngredient);
                             redoRecipe.addRequiredIngredient(newIngredient);
-                            }
+                        }
 
                         if (!isRequired && p == (Inventory.getAllIngredients().size() - 1)) {
                             redoRecipe.removeRequiredIngredient(oldIngredient);
-                            }
                         }
                     }
+                }
                 else {
                     redoRecipe.removeRequiredIngredient(oldIngredient);
                 }
             }
         }
-
-        recipeName.setCellValueFactory(new PropertyValueFactory<>("recipeName"));
-        recipeServings.setCellValueFactory(new PropertyValueFactory<>("recipeServings"));
-        recipeCost.setCellValueFactory(new PropertyValueFactory<>("recipeCost"));;
-
     }
 
     @FXML

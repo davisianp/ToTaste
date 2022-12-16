@@ -26,7 +26,7 @@ public class ModifyIngredientController implements Initializable {
     public RadioButton perishableRadio;
     public RadioButton nonPerishableRadio;
     public TextField ingredientNameBox;
-    public TextField stockBox;
+    public TextField numberOfUnitsBox;
     public TextField pricePerEachBox;
     public TextField unitOfMeasureBox;
     public TextField servingsPerContainerBox;
@@ -37,7 +37,7 @@ public class ModifyIngredientController implements Initializable {
     private static int idInput;
     private static String ingredientNameInput;
     private static String initialNameInput;
-    private static int stockInput;
+    private static int numberOfUnitsInput;
     private static double priceEachInput;
     private static int servingsNumberInput;
     private static String unitTypeInput;
@@ -49,7 +49,7 @@ public class ModifyIngredientController implements Initializable {
         idInput = selectedIngredient.getId();
         ingredientNameInput = selectedIngredient.getIngredientName();
         initialNameInput = selectedIngredient.getIngredientName();
-        stockInput = selectedIngredient.getStock();
+        numberOfUnitsInput = selectedIngredient.getNumberOfUnits();
         priceEachInput = selectedIngredient.getPricePerEach();
         servingsNumberInput = selectedIngredient.getServingsPerContainer();
         unitTypeInput = selectedIngredient.getUnitOfMeasure();
@@ -76,7 +76,7 @@ public class ModifyIngredientController implements Initializable {
 
         ingredientNameBox.setText("" + ingredientNameInput);
         pricePerEachBox.setText("" + priceEachInput);
-        stockBox.setText("" + stockInput);
+        numberOfUnitsBox.setText("" + numberOfUnitsInput);
         unitOfMeasureBox.setText("" + unitTypeInput);
         servingsPerContainerBox.setText("" + servingsNumberInput);
         switchBox.setText("" + switchBoxInput);
@@ -149,7 +149,7 @@ public class ModifyIngredientController implements Initializable {
             return;
         }
 
-        int stockInput = Integer.parseInt(stockBox.getText());
+        int numberOfUnitsInput = Integer.parseInt(numberOfUnitsBox.getText());
         double priceEachInput = Double.parseDouble(pricePerEachBox.getText());
         int servingsNumberInput = Integer.parseInt(servingsPerContainerBox.getText());
 
@@ -174,7 +174,7 @@ public class ModifyIngredientController implements Initializable {
             }
 
             Perishable perishIngredient = new Perishable(idInput, nameInput, priceEachInput,
-                    stockInput, unitTypeInput, servingsNumberInput, shortDateInput);
+                    numberOfUnitsInput, unitTypeInput, servingsNumberInput, shortDateInput);
             Inventory.updateIngredient(initialNameInput, perishIngredient);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
@@ -203,7 +203,7 @@ public class ModifyIngredientController implements Initializable {
             }
 
             NonPerishable nonPerishIngredient = new NonPerishable(idInput, nameInput, priceEachInput,
-                    stockInput, unitTypeInput, servingsNumberInput, longDateInput);
+                    numberOfUnitsInput, unitTypeInput, servingsNumberInput, longDateInput);
             Inventory.updateIngredient(initialNameInput, nonPerishIngredient);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();

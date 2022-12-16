@@ -6,15 +6,15 @@ public abstract class Ingredient {
     private int id;
     private String ingredientName;
     private double pricePerEach;
-    private int stock;
+    private int numberOfUnits;
     private String unitOfMeasure;
     private int servingsPerContainer;
 
-    public Ingredient(int id, String ingredientName, double pricePerEach, int stock, String unitOfMeasure, int servingsPerContainer) {
+    public Ingredient(int id, String ingredientName, double pricePerEach, int numberOfUnits, String unitOfMeasure, int servingsPerContainer) {
         this.id = id;
         this.ingredientName = ingredientName;
         this.pricePerEach = pricePerEach;
-        this.stock = stock;
+        this.numberOfUnits = numberOfUnits;
         this.unitOfMeasure = unitOfMeasure;
         this.servingsPerContainer = servingsPerContainer;
     }
@@ -37,12 +37,12 @@ public abstract class Ingredient {
         this.pricePerEach = pricePerEach;
     }
 
-    public int getStock() {
-        return stock;
+    public int getNumberOfUnits() {
+        return numberOfUnits;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
+    public void setNumberOfUnits(int numberOfUnits) {
+        this.numberOfUnits = numberOfUnits;
     }
 
     public String getUnitOfMeasure() {

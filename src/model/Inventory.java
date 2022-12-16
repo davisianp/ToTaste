@@ -74,6 +74,19 @@ public class Inventory {
         }
     }
 
+    public static int countNumOfUnits(Ingredient ingredient) {
+        int countNum = 0;
+        for (int i = 0; i < getAllRecipes().size(); ++i){
+            Recipe checkRecipe = getAllRecipes().get(i);
+            for (int j = 0; j < checkRecipe.getAllRequiredIngredients().size(); ++j){
+                if (ingredient.getId() == checkRecipe.getAllRequiredIngredients().get(j).getId()){
+                    countNum += 1;
+                }
+            }
+        }
+        return countNum;
+    }
+
     public static void deleteIngredient(Ingredient ingredient) {
         ALL_INGREDIENTS.remove(ingredient);
     }
@@ -91,11 +104,11 @@ public class Inventory {
     }
 
     private static void addTestData() {
-        Perishable sage = new Perishable(1,"Smoked Sausage", 4.50, 2, "lbs", 1, "01/21/2023");
+        Perishable sage = new Perishable(1,"Smoked Sausage", 4.50, 0, "lbs", 1, "01/21/2023");
         Inventory.addIngredient(sage);
-        NonPerishable bean = new NonPerishable(2,"Red Kidney Beans", 2.00, 4, "can", 1, "02/2024");
+        NonPerishable bean = new NonPerishable(2,"Red Kidney Beans", 2.00, 0, "can", 1, "02/2024");
         Inventory.addIngredient(bean);
-        NonPerishable rice = new NonPerishable(3,"Long Grain Rice", 3.00, 1, "quarter cup", 20, "03/2025");
+        NonPerishable rice = new NonPerishable(3,"Long Grain Rice", 3.00, 0, "quarter cup", 20, "03/2025");
         Inventory.addIngredient(rice);
         Recipe rbar = new Recipe("Red Beans and Rice", 0, 4, "spicy, zesty, smoky");
         Inventory.addRecipe(rbar);

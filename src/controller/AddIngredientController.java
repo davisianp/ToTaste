@@ -24,7 +24,7 @@ public class AddIngredientController implements Initializable {
     public RadioButton perishableRadio;
     public RadioButton nonPerishableRadio;
     public TextField ingredientNameBox;
-    public TextField stockBox;
+    public TextField numberOfUnitsBox;
     public TextField pricePerEachBox;
     public TextField unitOfMeasureBox;
     public TextField servingsPerContainerBox;
@@ -37,6 +37,8 @@ public class AddIngredientController implements Initializable {
         addIngredientLabel.setText("Add Ingredient");
         addIngredientLabel.setFont(Font.font("system", FontWeight.BOLD, FontPosture.REGULAR, 18));
         togglePerishable(new ActionEvent());
+
+        numberOfUnitsBox.setText("0");
     }
 
     public void toggleNonPerishable(ActionEvent actionEvent) {
@@ -101,7 +103,7 @@ public class AddIngredientController implements Initializable {
         }
 
         int idInput = Inventory.pickNewId();
-        int stockInput = Integer.parseInt(stockBox.getText());
+        int numberOfUnitsInput = Integer.parseInt(numberOfUnitsBox.getText());
         double priceEachInput = Double.parseDouble(pricePerEachBox.getText());
         int servingsNumberInput = Integer.parseInt(servingsPerContainerBox.getText());
 
@@ -125,7 +127,7 @@ public class AddIngredientController implements Initializable {
                 return;
             }
             Perishable ingredient = new Perishable(idInput, nameInput, priceEachInput,
-                    stockInput, unitTypeInput, servingsNumberInput, shortDateInput);
+                    numberOfUnitsInput, unitTypeInput, servingsNumberInput, shortDateInput);
             Inventory.addIngredient(ingredient);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
@@ -155,7 +157,7 @@ public class AddIngredientController implements Initializable {
             }
 
             NonPerishable ingredient = new NonPerishable(idInput, nameInput, priceEachInput,
-                    stockInput, unitTypeInput, servingsNumberInput, longDateInput);
+                    numberOfUnitsInput, unitTypeInput, servingsNumberInput, longDateInput);
             Inventory.addIngredient(ingredient);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();

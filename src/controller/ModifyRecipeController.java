@@ -30,12 +30,12 @@ public class ModifyRecipeController implements Initializable {
     public TextArea flavorTagsBox;
     public TableView<Ingredient> allIngredientsTable;
     public TableColumn<Ingredient, ?> ingredientName;
-    public TableColumn<Ingredient, ?> ingredientStock;
+    public TableColumn<Ingredient, ?> ingredientNumberOfUnits;
     public TableColumn<Ingredient, ?> ingredientPricePerEach;
     public TableView<Ingredient> requiredIngredientsTable;
     public TextField queryIngredients;
     public TableColumn<Ingredient, ?> requiredIngredientName;
-    public TableColumn<Ingredient, ?> requiredIngredientStock;
+    public TableColumn<Ingredient, ?> requiredIngredientNumberOfUnits;
     public TableColumn<Ingredient, ?> requiredIngredientPricePerEach;
 
     private static String recipeNameInput;
@@ -67,13 +67,13 @@ public class ModifyRecipeController implements Initializable {
         allIngredientsTable.setItems(Inventory.getAllIngredients());
 
         ingredientName.setCellValueFactory(new PropertyValueFactory<>("ingredientName"));
-        ingredientStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        ingredientNumberOfUnits.setCellValueFactory(new PropertyValueFactory<>("numberOfUnits"));
         ingredientPricePerEach.setCellValueFactory(new PropertyValueFactory<>("concatPriceUnit"));
 
         requiredIngredientsTable.setItems(tempRequiredIngredients);
 
         requiredIngredientName.setCellValueFactory(new PropertyValueFactory<>("ingredientName"));
-        requiredIngredientStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        requiredIngredientNumberOfUnits.setCellValueFactory(new PropertyValueFactory<>("numberOfUnits"));
         requiredIngredientPricePerEach.setCellValueFactory(new PropertyValueFactory<>("concatPriceUnit"));
 
         recipeNameBox.setText("" + recipeNameInput);

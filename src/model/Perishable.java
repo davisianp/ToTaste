@@ -5,9 +5,9 @@ public class Perishable extends Ingredient {
     private String shortDate;
 
     public Perishable(int id, String ingredientName, double pricePerEach,
-                      int stock, String unitOfMeasure, int servingsPerContainer,
+                      int numberOfUnits, String unitOfMeasure, int servingsPerContainer,
                       String shortDate) {
-        super(id, ingredientName, pricePerEach, stock, unitOfMeasure, servingsPerContainer);
+        super(id, ingredientName, pricePerEach, numberOfUnits, unitOfMeasure, servingsPerContainer);
         this.shortDate = shortDate;
     }
 
