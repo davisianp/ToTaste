@@ -20,7 +20,7 @@
       <TableView fx:id="inventoryIngredientTable" layoutX="44.0" layoutY="137.0" prefHeight="155.0" prefWidth="385.0">
         <columns>
           <TableColumn fx:id="ingredientName" prefWidth="122.0" text="Ingredient Name" />
-            <TableColumn fx:id="ingredientNumberOfUnits" prefWidth="141.0" text="Ingredient Stock" />
+            <TableColumn fx:id="ingredientNumberOfUnits" prefWidth="141.0" text="Usage In All Recipes" />
             <TableColumn fx:id="ingredientPriceUnitCombo" prefWidth="75.0" text="Price Per Each" />
         </columns>
          <columnResizePolicy>

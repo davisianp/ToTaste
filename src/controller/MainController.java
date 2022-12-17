@@ -121,7 +121,7 @@ public class MainController implements Initializable {
 
         Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyIngredient.fxml"));
         Stage stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 600, 300);
         stage.setTitle("Modify Ingredient Form");
         stage.setScene(scene);
         stage.show();

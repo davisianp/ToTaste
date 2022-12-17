@@ -30,7 +30,6 @@
       <TableView fx:id="allIngredientsTable" layoutX="384.0" layoutY="74.0" prefHeight="158.0" prefWidth="378.0">
          <columns>
             <TableColumn fx:id="ingredientName" text="Ingredient Name" />
-            <TableColumn fx:id="ingredientNumberOfUnits" prefWidth="100.0" text="Ingredient Stock" />
             <TableColumn fx:id="ingredientPricePerEach" prefWidth="128.0" text="Price Per Each" />
          </columns>
          <columnResizePolicy>

@@ -30,7 +30,6 @@ public class ModifyRecipeController implements Initializable {
     public TextArea flavorTagsBox;
     public TableView<Ingredient> allIngredientsTable;
     public TableColumn<Ingredient, ?> ingredientName;
-    public TableColumn<Ingredient, ?> ingredientNumberOfUnits;
     public TableColumn<Ingredient, ?> ingredientPricePerEach;
     public TableView<Ingredient> requiredIngredientsTable;
     public TextField queryIngredients;
@@ -44,6 +43,8 @@ public class ModifyRecipeController implements Initializable {
     private static String flavorTagsInput;
     private static ObservableList<Ingredient> tempRequiredIngredients = FXCollections.observableArrayList();
     private static ObservableList<Ingredient> initialTempRequiredIngredients = FXCollections.observableArrayList();
+    private static ObservableList<Ingredient> displayRequiredIngredients = FXCollections.observableArrayList();
+
     public Label errorBox;
 
     public static void setInitialModifyRecipe(Recipe selectedRecipe) {
@@ -67,10 +68,10 @@ public class ModifyRecipeController implements Initializable {
         allIngredientsTable.setItems(Inventory.getAllIngredients());
 
         ingredientName.setCellValueFactory(new PropertyValueFactory<>("ingredientName"));
-        ingredientNumberOfUnits.setCellValueFactory(new PropertyValueFactory<>("numberOfUnits"));
         ingredientPricePerEach.setCellValueFactory(new PropertyValueFactory<>("concatPriceUnit"));
 
-        requiredIngredientsTable.setItems(tempRequiredIngredients);
+        confirmIdAndCount();
+        requiredIngredientsTable.setItems(displayRequiredIngredients);
 
         requiredIngredientName.setCellValueFactory(new PropertyValueFactory<>("ingredientName"));
         requiredIngredientNumberOfUnits.setCellValueFactory(new PropertyValueFactory<>("numberOfUnits"));
@@ -97,16 +98,20 @@ public class ModifyRecipeController implements Initializable {
         stage.show();
     }
 
-    public void onAddIngredientClick(ActionEvent actionEvent) {
+    public void onAddIngredientClick(ActionEvent actionEvent) throws IOException {
         Ingredient selectedIngredient = allIngredientsTable.getSelectionModel().getSelectedItem();
 
         if(selectedIngredient == null)
             return;
 
+        // we can add the ingredient to the Inventory here for that simplistic add ingredient option
+
         tempRequiredIngredients.add(selectedIngredient);
-        requiredIngredientsTable.setItems(tempRequiredIngredients);
         double tempRecipeCost = Double.parseDouble(recipeCostBox.getText(1, 4)) + selectedIngredient.getPricePerEach();
         recipeCostBox.setText("$" + String.format("%.2f", tempRecipeCost));
+
+        confirmIdAndCount();
+        allIngredientsTable.refresh();
     }
 
     public void onRemoveRequiredIngredientClick(ActionEvent actionEvent) {
@@ -127,9 +132,11 @@ public class ModifyRecipeController implements Initializable {
         }
 
         tempRequiredIngredients.remove(selectedIngredient);
-        requiredIngredientsTable.setItems(tempRequiredIngredients);
         double tempRecipeCost = Double.parseDouble(recipeCostBox.getText(1, 4)) - selectedIngredient.getPricePerEach();
         recipeCostBox.setText("$" + String.format("%.2f", tempRecipeCost));
+
+        confirmIdAndCount();
+        allIngredientsTable.refresh();
     }
 
     public void onSaveClick(ActionEvent actionEvent) throws IOException {
@@ -190,4 +197,57 @@ public class ModifyRecipeController implements Initializable {
         }
         allIngredientsTable.setItems(ingredients);
     }
+
+    public void confirmIdAndCount(){
+        int[] recipeIngredientCount = new int[Inventory.getAllIngredients().size()];
+
+        while(displayRequiredIngredients.size() > 0){
+            displayRequiredIngredients.remove(0);
+        }
+
+        if (tempRequiredIngredients.size() == 1){
+            Ingredient onlyOneIngredient = tempRequiredIngredients.get(0);
+            onlyOneIngredient.setNumberOfUnits(1);
+            displayRequiredIngredients.add(onlyOneIngredient);
+            requiredIngredientsTable.refresh();
+            return;
+        }
+
+        for(int i = 1; i < tempRequiredIngredients.size(); ++i){
+            boolean alreadyDidThisId = false;
+            int indexPosition = 0;
+            Ingredient thisIngredient = tempRequiredIngredients.get(i);
+            for (int j = (i - 1); j >= 0; --j) {
+                Ingredient prevIngredient = tempRequiredIngredients.get(j);
+                if (i == 1) {
+                    recipeIngredientCount[indexPosition] = countTempIngredients(prevIngredient.getId());
+                    prevIngredient.setNumberOfUnits(recipeIngredientCount[indexPosition]);
+                    displayRequiredIngredients.add(prevIngredient);
+                    ++indexPosition;
+                }
+                if (thisIngredient.getId() == prevIngredient.getId()) {
+                    alreadyDidThisId = true;
+                    break;
+                }
+            }
+            if(!alreadyDidThisId){
+                recipeIngredientCount[indexPosition] = countTempIngredients(thisIngredient.getId());
+                thisIngredient.setNumberOfUnits(recipeIngredientCount[indexPosition]);
+                displayRequiredIngredients.add(thisIngredient);
+                ++indexPosition;
+            }
+        }
+        requiredIngredientsTable.refresh();
+    }
+
+    public int countTempIngredients(int tempIngredientId){
+        int countId = 0;
+        for (Ingredient tempRequiredIngredient : tempRequiredIngredients) {
+            if (tempIngredientId == tempRequiredIngredient.getId()) {
+                countId += 1;
+            }
+        }
+        return countId;
+    }
 }
+
