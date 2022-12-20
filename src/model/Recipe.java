@@ -37,7 +37,7 @@ public class Recipe {
     public String getRecipeCost() {
         recipeCost = 0;
         for (Ingredient requiredIngredient : requiredIngredients) {
-            recipeCost += requiredIngredient.getPricePerEach();
+            recipeCost += requiredIngredient.getPricePerContainer() / requiredIngredient.getUnitsPerContainer();
         }
         return "$" + String.format("%.2f", recipeCost);
     }

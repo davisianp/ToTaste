@@ -80,10 +80,10 @@ public class MainController implements Initializable {
                         }
                         if (oldIngredient.getId() == newIngredient.getId() && (
                                 !Objects.equals(oldIngredient.getIngredientName(), newIngredient.getIngredientName()) ||
-                                        oldIngredient.getPricePerEach() != newIngredient.getPricePerEach() ||
+                                        oldIngredient.getPricePerContainer() != newIngredient.getPricePerContainer() ||
                                         oldIngredient.getNumberOfUnits() != newIngredient.getNumberOfUnits() ||
                                         !Objects.equals(oldIngredient.getUnitOfMeasure(), newIngredient.getUnitOfMeasure()) ||
-                                        oldIngredient.getServingsPerContainer() != newIngredient.getServingsPerContainer())
+                                        oldIngredient.getUnitsPerContainer() != newIngredient.getUnitsPerContainer())
                         ) {
                             redoRecipe.removeRequiredIngredient(oldIngredient);
                             redoRecipe.addRequiredIngredient(newIngredient);

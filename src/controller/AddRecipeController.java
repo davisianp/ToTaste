@@ -73,7 +73,8 @@ public class AddRecipeController implements Initializable {
         tempRequiredIngredients.add(selectedIngredient);
         confirmIdAndCount();
         requiredIngredientsTable.setItems(displayRequiredIngredients);
-        double tempRecipeCost = Double.parseDouble(recipeCostBox.getText(1, 4)) + selectedIngredient.getPricePerEach();
+        double tempRecipeCost = Double.parseDouble(recipeCostBox.getText(1, 5)) +
+                (selectedIngredient.getPricePerContainer() / selectedIngredient.getUnitsPerContainer());
         recipeCostBox.setText("$" + String.format("%.2f", tempRecipeCost));
     }
 
@@ -96,8 +97,8 @@ public class AddRecipeController implements Initializable {
 
         tempRequiredIngredients.remove(selectedIngredient);
         confirmIdAndCount();
-        requiredIngredientsTable.setItems(displayRequiredIngredients);
-        double tempRecipeCost = Double.parseDouble(recipeCostBox.getText(1, 4)) - selectedIngredient.getPricePerEach();
+        double tempRecipeCost = Double.parseDouble(recipeCostBox.getText(1, 5)) -
+                (selectedIngredient.getPricePerContainer() / selectedIngredient.getUnitsPerContainer());
         recipeCostBox.setText("$" + String.format("%.2f", tempRecipeCost));
     }
 

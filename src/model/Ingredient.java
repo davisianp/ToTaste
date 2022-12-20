@@ -5,18 +5,18 @@ public abstract class Ingredient {
 
     private int id;
     private String ingredientName;
-    private double pricePerEach;
+    private double pricePerContainer;
     private int numberOfUnits;
     private String unitOfMeasure;
-    private int servingsPerContainer;
+    private int unitsPerContainer;
 
-    public Ingredient(int id, String ingredientName, double pricePerEach, int numberOfUnits, String unitOfMeasure, int servingsPerContainer) {
+    public Ingredient(int id, String ingredientName, double pricePerContainer, int numberOfUnits, String unitOfMeasure, int unitsPerContainer) {
         this.id = id;
         this.ingredientName = ingredientName;
-        this.pricePerEach = pricePerEach;
+        this.pricePerContainer = pricePerContainer;
         this.numberOfUnits = numberOfUnits;
         this.unitOfMeasure = unitOfMeasure;
-        this.servingsPerContainer = servingsPerContainer;
+        this.unitsPerContainer = unitsPerContainer;
     }
 
     public int getId() { return id; }
@@ -29,12 +29,12 @@ public abstract class Ingredient {
         this.ingredientName = ingredientName;
     }
 
-    public double getPricePerEach() {
-        return pricePerEach;
+    public double getPricePerContainer() {
+        return pricePerContainer;
     }
 
-    public void setPricePerEach(double pricePerEach) {
-        this.pricePerEach = pricePerEach;
+    public void setPricePerContainer(double pricePerContainer) {
+        this.pricePerContainer = pricePerContainer;
     }
 
     public int getNumberOfUnits() {
@@ -53,16 +53,17 @@ public abstract class Ingredient {
         this.unitOfMeasure = unitOfMeasure;
     }
 
-    public int getServingsPerContainer() {
-        return servingsPerContainer;
+    public int getUnitsPerContainer() {
+        return unitsPerContainer;
     }
 
-    public void setServingsPerContainer(int servingsPerContainer) {
-        this.servingsPerContainer = servingsPerContainer;
+    public void setUnitsPerContainer(int unitsPerContainer) {
+        this.unitsPerContainer = unitsPerContainer;
     }
 
     public String getConcatPriceUnit() {
-        return "$" + String.format("%.2f", pricePerEach) + " per " + unitOfMeasure;
+        double refinePrice = (pricePerContainer / unitsPerContainer);
+        return "$" + String.format("%.2f", refinePrice) + " per " + unitOfMeasure;
     }
 
 }

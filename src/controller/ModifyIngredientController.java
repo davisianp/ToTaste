@@ -27,9 +27,9 @@ public class ModifyIngredientController implements Initializable {
     public RadioButton nonPerishableRadio;
     public TextField ingredientNameBox;
     public TextField numberOfUnitsBox;
-    public TextField pricePerEachBox;
+    public TextField pricePerContainerBox;
     public TextField unitOfMeasureBox;
-    public TextField servingsPerContainerBox;
+    public TextField unitsPerContainerBox;
     public TextField switchBox;
     public Label toggleTextSwitch;
     public ToggleGroup perishableStateGroup;
@@ -38,8 +38,8 @@ public class ModifyIngredientController implements Initializable {
     private static String ingredientNameInput;
     private static String initialNameInput;
     private static int numberOfUnitsInput;
-    private static double priceEachInput;
-    private static int servingsNumberInput;
+    private static double priceContainerInput;
+    private static int unitsPerContainerInput;
     private static String unitTypeInput;
     private static String switchBoxInput;
     private static boolean isNonPerishable;
@@ -50,8 +50,8 @@ public class ModifyIngredientController implements Initializable {
         ingredientNameInput = selectedIngredient.getIngredientName();
         initialNameInput = selectedIngredient.getIngredientName();
         numberOfUnitsInput = selectedIngredient.getNumberOfUnits();
-        priceEachInput = selectedIngredient.getPricePerEach();
-        servingsNumberInput = selectedIngredient.getServingsPerContainer();
+        priceContainerInput = selectedIngredient.getPricePerContainer();
+        unitsPerContainerInput = selectedIngredient.getUnitsPerContainer();
         unitTypeInput = selectedIngredient.getUnitOfMeasure();
         if(selectedIngredient instanceof NonPerishable){
             switchBoxInput = ((NonPerishable) selectedIngredient).getLongDate();
@@ -75,10 +75,10 @@ public class ModifyIngredientController implements Initializable {
         modifyIngredientLabel.setFont(Font.font("system", FontWeight.BOLD, FontPosture.REGULAR, 18));
 
         ingredientNameBox.setText("" + ingredientNameInput);
-        pricePerEachBox.setText("" + priceEachInput);
+        pricePerContainerBox.setText("" + priceContainerInput);
         numberOfUnitsBox.setText("" + numberOfUnitsInput);
         unitOfMeasureBox.setText("" + unitTypeInput);
-        servingsPerContainerBox.setText("" + servingsNumberInput);
+        unitsPerContainerBox.setText("" + unitsPerContainerInput);
         switchBox.setText("" + switchBoxInput);
         if (isNonPerishable) {
             nonPerishableRadio.setSelected(true);
@@ -111,14 +111,14 @@ public class ModifyIngredientController implements Initializable {
         String errorCollector = "";
 
         try {
-            double priceCostTestInput = Double.parseDouble(pricePerEachBox.getText());
+            double priceCostTestInput = Double.parseDouble(pricePerContainerBox.getText());
         } catch (NumberFormatException e) {
             errorCollector += "--Price/cost input must be a floating point number \n";
         }
         try {
-            int servingsTestInput = Integer.parseInt(servingsPerContainerBox.getText());
+            int servingsTestInput = Integer.parseInt(unitsPerContainerBox.getText());
         } catch (NumberFormatException e) {
-            errorCollector += "--number of servings in a container must be an integer \n";
+            errorCollector += "--the number of units in a container must be an integer greater than 0\n";
         }
 
         if (!errorCollector.isBlank()){
@@ -150,8 +150,16 @@ public class ModifyIngredientController implements Initializable {
         }
 
         int numberOfUnitsInput = Integer.parseInt(numberOfUnitsBox.getText());
-        double priceEachInput = Double.parseDouble(pricePerEachBox.getText());
-        int servingsNumberInput = Integer.parseInt(servingsPerContainerBox.getText());
+        double priceContainerInput = Double.parseDouble(pricePerContainerBox.getText());
+        int unitsPerContainerInput = Integer.parseInt(unitsPerContainerBox.getText());
+        if (unitsPerContainerInput < 1) {
+                Alert unitTypeBlankError = new Alert(Alert.AlertType.ERROR);
+                unitTypeBlankError.setTitle("Units In Container Error");
+                unitTypeBlankError.setHeaderText("Units in container field must have a integer value greater than 0");
+                unitTypeBlankError.setContentText("Please indicate how many " + unitTypeInput + "(s) are in a given container.");
+                unitTypeBlankError.showAndWait();
+                return;
+        }
 
         if (perishableRadio.isSelected()) {
             String shortDateInput = switchBox.getText();
@@ -173,8 +181,8 @@ public class ModifyIngredientController implements Initializable {
                 return;
             }
 
-            Perishable perishIngredient = new Perishable(idInput, nameInput, priceEachInput,
-                    numberOfUnitsInput, unitTypeInput, servingsNumberInput, shortDateInput);
+            Perishable perishIngredient = new Perishable(idInput, nameInput, priceContainerInput,
+                    numberOfUnitsInput, unitTypeInput, unitsPerContainerInput, shortDateInput);
             Inventory.updateIngredient(initialNameInput, perishIngredient);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
@@ -202,8 +210,8 @@ public class ModifyIngredientController implements Initializable {
                 return;
             }
 
-            NonPerishable nonPerishIngredient = new NonPerishable(idInput, nameInput, priceEachInput,
-                    numberOfUnitsInput, unitTypeInput, servingsNumberInput, longDateInput);
+            NonPerishable nonPerishIngredient = new NonPerishable(idInput, nameInput, priceContainerInput,
+                    numberOfUnitsInput, unitTypeInput, unitsPerContainerInput, longDateInput);
             Inventory.updateIngredient(initialNameInput, nonPerishIngredient);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();

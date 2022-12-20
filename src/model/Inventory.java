@@ -83,6 +83,7 @@ public class Inventory {
                     countNum += 1;
                 }
             }
+            System.out.println(checkRecipe.getRecipeName() + " " + ingredient.getId() + " " + ingredient.getIngredientName());
         }
         return countNum;
     }
@@ -132,7 +133,7 @@ public class Inventory {
                 checkId = ingredientAtIndex.getId();
             }
         }
-        return checkId;
+        return checkId + 1;
     }
 
     static {

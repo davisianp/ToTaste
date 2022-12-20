@@ -24,13 +24,13 @@
       <RadioButton fx:id="nonPerishableRadio" layoutX="156.0" layoutY="196.0" mnemonicParsing="false" onAction="#toggleNonPerishable" prefHeight="17.0" prefWidth="108.0" text="Non-Perishable" toggleGroup="$perishableStateGroup" />
       <TextField fx:id="ingredientNameBox" layoutX="163.0" layoutY="81.0" prefHeight="25.0" prefWidth="117.0" />
       <TextField fx:id="numberOfUnitsBox" disable="true" layoutX="163.0" layoutY="125.0" prefHeight="25.0" prefWidth="117.0" />
-      <TextField fx:id="pricePerEachBox" layoutX="434.0" layoutY="81.0" prefHeight="25.0" prefWidth="117.0" />
-      <TextField fx:id="servingsPerContainerBox" layoutX="434.0" layoutY="125.0" prefHeight="25.0" prefWidth="117.0" />
+      <TextField fx:id="pricePerContainerBox" layoutX="434.0" layoutY="81.0" prefHeight="25.0" prefWidth="117.0" />
+      <TextField fx:id="unitsPerContainerBox" layoutX="434.0" layoutY="125.0" prefHeight="25.0" prefWidth="117.0" />
       <TextField fx:id="unitOfMeasureBox" layoutX="434.0" layoutY="169.0" prefHeight="25.0" prefWidth="117.0" />
       <TextField fx:id="switchBox" layoutX="163.0" layoutY="228.0" prefHeight="25.0" prefWidth="117.0" />
       <Label layoutX="45.0" layoutY="81.0" prefHeight="25.0" prefWidth="108.0" text="Ingredient Name" />
-      <Label layoutX="45.0" layoutY="116.0" prefHeight="43.0" prefWidth="108.0" text="Amount of Unit Required By Recipes" wrapText="true" />
-      <Label layoutX="314.0" layoutY="81.0" prefHeight="25.0" prefWidth="117.0" text="Price Per Each Unit" />
+      <Label layoutX="45.0" layoutY="116.0" prefHeight="43.0" prefWidth="108.0" text="Amount of Units Required By Recipes" wrapText="true" />
+      <Label layoutX="314.0" layoutY="81.0" prefHeight="25.0" prefWidth="117.0" text="Price Per Container" />
       <Label layoutX="314.0" layoutY="125.0" prefHeight="25.0" prefWidth="117.0" text="Units In Container" />
       <Label layoutX="314.0" layoutY="169.0" prefHeight="25.0" prefWidth="117.0" text="Unit of Measurement" />
       <Label fx:id="toggleTextSwitch" layoutX="45.0" layoutY="219.0" prefHeight="43.0" prefWidth="117.0" text="Expiration Date" />

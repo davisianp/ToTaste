@@ -107,7 +107,8 @@ public class ModifyRecipeController implements Initializable {
         // we can add the ingredient to the Inventory here for that simplistic add ingredient option
 
         tempRequiredIngredients.add(selectedIngredient);
-        double tempRecipeCost = Double.parseDouble(recipeCostBox.getText(1, 4)) + selectedIngredient.getPricePerEach();
+        double tempRecipeCost = Double.parseDouble(recipeCostBox.getText(1, 5)) +
+                (selectedIngredient.getPricePerContainer() / selectedIngredient.getUnitsPerContainer());
         recipeCostBox.setText("$" + String.format("%.2f", tempRecipeCost));
 
         confirmIdAndCount();
@@ -132,7 +133,8 @@ public class ModifyRecipeController implements Initializable {
         }
 
         tempRequiredIngredients.remove(selectedIngredient);
-        double tempRecipeCost = Double.parseDouble(recipeCostBox.getText(1, 4)) - selectedIngredient.getPricePerEach();
+        double tempRecipeCost = Double.parseDouble(recipeCostBox.getText(1, 5)) -
+                (selectedIngredient.getPricePerContainer() / selectedIngredient.getUnitsPerContainer());
         recipeCostBox.setText("$" + String.format("%.2f", tempRecipeCost));
 
         confirmIdAndCount();

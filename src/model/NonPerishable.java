@@ -4,10 +4,10 @@ public class NonPerishable extends Ingredient {
 
     private String longDate;
 
-    public NonPerishable(int id, String ingredientName, double pricePerEach,
-                         int numberOfUnits, String unitOfMeasure, int servingsPerContainer,
+    public NonPerishable(int id, String ingredientName, double pricePerContainer,
+                         int numberOfUnits, String unitOfMeasure, int unitsPerContainer,
                          String longDate) {
-        super(id, ingredientName, pricePerEach, numberOfUnits, unitOfMeasure, servingsPerContainer);
+        super(id, ingredientName, pricePerContainer, numberOfUnits, unitOfMeasure, unitsPerContainer);
         this.longDate = longDate;
     }
 

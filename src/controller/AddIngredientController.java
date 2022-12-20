@@ -25,9 +25,9 @@ public class AddIngredientController implements Initializable {
     public RadioButton nonPerishableRadio;
     public TextField ingredientNameBox;
     public TextField numberOfUnitsBox;
-    public TextField pricePerEachBox;
+    public TextField pricePerContainerBox;
     public TextField unitOfMeasureBox;
-    public TextField servingsPerContainerBox;
+    public TextField unitsPerContainerBox;
     public TextField switchBox;
     public Label toggleTextSwitch;
     public ToggleGroup perishableStateGroup;
@@ -39,6 +39,7 @@ public class AddIngredientController implements Initializable {
         togglePerishable(new ActionEvent());
 
         numberOfUnitsBox.setText("0");
+        unitsPerContainerBox.setText("1");
     }
 
     public void toggleNonPerishable(ActionEvent actionEvent) {
@@ -63,14 +64,14 @@ public class AddIngredientController implements Initializable {
         String errorCollector = "";
 
         try {
-            double priceCostTestInput = Double.parseDouble(pricePerEachBox.getText());
+            double priceCostTestInput = Double.parseDouble(pricePerContainerBox.getText());
         } catch (NumberFormatException e) {
             errorCollector += "--Price/cost input must be a floating point number \n";
         }
         try {
-            int servingsTestInput = Integer.parseInt(servingsPerContainerBox.getText());
+            int servingsTestInput = Integer.parseInt(unitsPerContainerBox.getText());
         } catch (NumberFormatException e) {
-            errorCollector += "--number of servings in a container must be an integer \n";
+            errorCollector += "--the number of units in a container must be an integer greater than 0\n";
         }
 
         if (!errorCollector.isBlank()){
@@ -104,8 +105,16 @@ public class AddIngredientController implements Initializable {
 
         int idInput = Inventory.pickNewId();
         int numberOfUnitsInput = Integer.parseInt(numberOfUnitsBox.getText());
-        double priceEachInput = Double.parseDouble(pricePerEachBox.getText());
-        int servingsNumberInput = Integer.parseInt(servingsPerContainerBox.getText());
+        double priceContainerInput = Double.parseDouble(pricePerContainerBox.getText());
+        int unitsPerContainerInput = Integer.parseInt(unitsPerContainerBox.getText());
+        if (unitsPerContainerInput < 1) {
+            Alert unitTypeBlankError = new Alert(Alert.AlertType.ERROR);
+            unitTypeBlankError.setTitle("Units In Container Error");
+            unitTypeBlankError.setHeaderText("Units in container field must have a integer value greater than 0");
+            unitTypeBlankError.setContentText("Please indicate how many " + unitTypeInput + "(s) are in a given container.");
+            unitTypeBlankError.showAndWait();
+            return;
+        }
 
         if (perishableRadio.isSelected()) {
             String shortDateInput = switchBox.getText();
@@ -126,9 +135,9 @@ public class AddIngredientController implements Initializable {
                 shortDateIncorrectAlert.showAndWait();
                 return;
             }
-            Perishable ingredient = new Perishable(idInput, nameInput, priceEachInput,
-                    numberOfUnitsInput, unitTypeInput, servingsNumberInput, shortDateInput);
-            Inventory.addIngredient(ingredient);
+            Perishable perishIngredient = new Perishable(idInput, nameInput, priceContainerInput,
+                    numberOfUnitsInput, unitTypeInput, unitsPerContainerInput, shortDateInput);
+            Inventory.addIngredient(perishIngredient);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 900, 400);
@@ -156,9 +165,9 @@ public class AddIngredientController implements Initializable {
                 return;
             }
 
-            NonPerishable ingredient = new NonPerishable(idInput, nameInput, priceEachInput,
-                    numberOfUnitsInput, unitTypeInput, servingsNumberInput, longDateInput);
-            Inventory.addIngredient(ingredient);
+            NonPerishable nonPerishIngredient = new NonPerishable(idInput, nameInput, priceContainerInput,
+                    numberOfUnitsInput, unitTypeInput, unitsPerContainerInput, longDateInput);
+            Inventory.addIngredient(nonPerishIngredient);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 900, 400);
