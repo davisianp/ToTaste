@@ -83,7 +83,6 @@ public class Inventory {
                     countNum += 1;
                 }
             }
-            System.out.println(checkRecipe.getRecipeName() + " " + ingredient.getId() + " " + ingredient.getIngredientName());
         }
         return countNum;
     }
@@ -125,11 +124,11 @@ public class Inventory {
         soup.addRequiredIngredient(bean);
     }
 
-    public static int pickNewId(){
+    public static int pickNewId() {
         int checkId = -1;
-        for(int i = 0; i < getAllIngredients().size(); ++i){
+        for (int i = 0; i < getAllIngredients().size(); ++i) {
             Ingredient ingredientAtIndex = getAllIngredients().get(i);
-            if (checkId <= ingredientAtIndex.getId()){
+            if (checkId <= ingredientAtIndex.getId()) {
                 checkId = ingredientAtIndex.getId();
             }
         }
@@ -139,4 +138,6 @@ public class Inventory {
     static {
         addTestData();
     }
+
+
 }

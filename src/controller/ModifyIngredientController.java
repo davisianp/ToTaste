@@ -53,16 +53,15 @@ public class ModifyIngredientController implements Initializable {
         priceContainerInput = selectedIngredient.getPricePerContainer();
         unitsPerContainerInput = selectedIngredient.getUnitsPerContainer();
         unitTypeInput = selectedIngredient.getUnitOfMeasure();
-        if(selectedIngredient instanceof NonPerishable){
+        if (selectedIngredient instanceof NonPerishable) {
             switchBoxInput = ((NonPerishable) selectedIngredient).getLongDate();
-            if(switchBoxInput.contains("-") || switchBoxInput.contains(".")){
+            if (switchBoxInput.contains("-") || switchBoxInput.contains(".")) {
                 switchBoxInput = switchBoxInput.replaceAll("[-.]", "/");
             }
             isNonPerishable = true;
-        }
-        else{
+        } else {
             switchBoxInput = ((Perishable) selectedIngredient).getShortDate();
-            if(switchBoxInput.contains("-") || switchBoxInput.contains(".")){
+            if (switchBoxInput.contains("-") || switchBoxInput.contains(".")) {
                 switchBoxInput = switchBoxInput.replaceAll("[-.]", "/");
             }
             isNonPerishable = false;
@@ -83,8 +82,7 @@ public class ModifyIngredientController implements Initializable {
         if (isNonPerishable) {
             nonPerishableRadio.setSelected(true);
             toggleNonPerishable(new ActionEvent());
-        }
-        else {
+        } else {
             perishableRadio.setSelected(true);
             togglePerishable(new ActionEvent());
         }
@@ -100,7 +98,7 @@ public class ModifyIngredientController implements Initializable {
 
     public void onCancelClick(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
-        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 900, 400);
         stage.setTitle("To Taste: Main Screen");
         stage.setScene(scene);
@@ -121,7 +119,7 @@ public class ModifyIngredientController implements Initializable {
             errorCollector += "--the number of units in a container must be an integer greater than 0\n";
         }
 
-        if (!errorCollector.isBlank()){
+        if (!errorCollector.isBlank()) {
             Alert exceptionErrors = new Alert(Alert.AlertType.ERROR);
             exceptionErrors.setTitle("Errors Causing Number Format Exception");
             exceptionErrors.setHeaderText("Exception caused by:");
@@ -131,7 +129,7 @@ public class ModifyIngredientController implements Initializable {
         }
 
         String nameInput = ingredientNameBox.getText();
-        if(nameInput.isBlank()){
+        if (nameInput.isBlank()) {
             Alert nameBlankError = new Alert(Alert.AlertType.ERROR);
             nameBlankError.setTitle("Ingredient Name Field Is Empty");
             nameBlankError.setHeaderText("Ingredient name field must have a string value");
@@ -140,7 +138,7 @@ public class ModifyIngredientController implements Initializable {
             return;
         }
         String unitTypeInput = unitOfMeasureBox.getText();
-        if(unitTypeInput.isBlank()){
+        if (unitTypeInput.isBlank()) {
             Alert unitTypeBlankError = new Alert(Alert.AlertType.ERROR);
             unitTypeBlankError.setTitle("Unit Of Measurement Field Is Empty");
             unitTypeBlankError.setHeaderText("Unit of measurement field must have a string value");
@@ -153,18 +151,18 @@ public class ModifyIngredientController implements Initializable {
         double priceContainerInput = Double.parseDouble(pricePerContainerBox.getText());
         int unitsPerContainerInput = Integer.parseInt(unitsPerContainerBox.getText());
         if (unitsPerContainerInput < 1) {
-                Alert unitTypeBlankError = new Alert(Alert.AlertType.ERROR);
-                unitTypeBlankError.setTitle("Units In Container Error");
-                unitTypeBlankError.setHeaderText("Units in container field must have a integer value greater than 0");
-                unitTypeBlankError.setContentText("Please indicate how many " + unitTypeInput + "(s) are in a given container.");
-                unitTypeBlankError.showAndWait();
-                return;
+            Alert unitTypeBlankError = new Alert(Alert.AlertType.ERROR);
+            unitTypeBlankError.setTitle("Units In Container Error");
+            unitTypeBlankError.setHeaderText("Units in container field must have a integer value greater than 0");
+            unitTypeBlankError.setContentText("Please indicate how many " + unitTypeInput + "(s) are in a given container.");
+            unitTypeBlankError.showAndWait();
+            return;
         }
 
         if (perishableRadio.isSelected()) {
             String shortDateInput = switchBox.getText();
 
-            if(shortDateInput.isBlank()){
+            if (shortDateInput.isBlank()) {
                 Alert shortDateEmptyAlert = new Alert(Alert.AlertType.ERROR);
                 shortDateEmptyAlert.setTitle("Short Date Field Is Empty");
                 shortDateEmptyAlert.setHeaderText("Short date field must have a value of MM/YYYY");
@@ -172,7 +170,7 @@ public class ModifyIngredientController implements Initializable {
                 shortDateEmptyAlert.showAndWait();
                 return;
             }
-            if(!shortDateInput.matches("(?:0[1-9]|1[012])[-/.](?:0[1-9]|[12][0-9]|3[01])[-/.](?:20\\d{2}|20[01][0-9]|2100)")){
+            if (!shortDateInput.matches("(?:0[1-9]|1[012])[-/.](?:0[1-9]|[12][0-9]|3[01])[-/.](?:20\\d{2}|20[01][0-9]|2100)")) {
                 Alert shortDateIncorrectAlert = new Alert(Alert.AlertType.ERROR);
                 shortDateIncorrectAlert.setTitle("Short Date Input Is Incorrect");
                 shortDateIncorrectAlert.setHeaderText("Short date field must have a value of MM/DD/YYYY");
@@ -185,15 +183,14 @@ public class ModifyIngredientController implements Initializable {
                     numberOfUnitsInput, unitTypeInput, unitsPerContainerInput, shortDateInput);
             Inventory.updateIngredient(initialNameInput, perishIngredient);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
-            Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 900, 400);
             stage.setTitle("To Taste: Main Screen");
             stage.setScene(scene);
             stage.show();
-        }
-        else if(nonPerishableRadio.isSelected()) {
+        } else if (nonPerishableRadio.isSelected()) {
             String longDateInput = switchBox.getText();
-            if(longDateInput.isBlank()){
+            if (longDateInput.isBlank()) {
                 Alert longDateEmptyAlert = new Alert(Alert.AlertType.ERROR);
                 longDateEmptyAlert.setTitle("Long Date Field Is Empty");
                 longDateEmptyAlert.setHeaderText("Long date field must have a value of MM/DD/YYYY");
@@ -201,7 +198,7 @@ public class ModifyIngredientController implements Initializable {
                 longDateEmptyAlert.showAndWait();
                 return;
             }
-            if(!longDateInput.matches("(?:0[1-9]|1[012])[-/.](?:20\\d{2}|20[01][0-9]|2100)")){
+            if (!longDateInput.matches("(?:0[1-9]|1[012])[-/.](?:20\\d{2}|20[01][0-9]|2100)")) {
                 Alert longDateIncorrectAlert = new Alert(Alert.AlertType.ERROR);
                 longDateIncorrectAlert.setTitle("Long Date Input Is Incorrect");
                 longDateIncorrectAlert.setHeaderText("Long date field must have a value of MM/YYYY");
@@ -214,7 +211,7 @@ public class ModifyIngredientController implements Initializable {
                     numberOfUnitsInput, unitTypeInput, unitsPerContainerInput, longDateInput);
             Inventory.updateIngredient(initialNameInput, nonPerishIngredient);
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
-            Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 900, 400);
             stage.setTitle("To Taste: Main Screen");
             stage.setScene(scene);
@@ -222,3 +219,4 @@ public class ModifyIngredientController implements Initializable {
         }
     }
 }
+
