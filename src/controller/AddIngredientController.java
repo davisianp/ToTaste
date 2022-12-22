@@ -17,6 +17,7 @@ import model.NonPerishable;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class AddIngredientController implements Initializable {
@@ -52,9 +53,9 @@ public class AddIngredientController implements Initializable {
 
     @FXML
     public void onCancelClick(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/Main.fxml")));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 900, 400);
+        Scene scene = new Scene(root, 466,665);
         stage.setTitle("To Taste: Main Screen");
         stage.setScene(scene);
         stage.show();
@@ -138,9 +139,9 @@ public class AddIngredientController implements Initializable {
             Perishable perishIngredient = new Perishable(idInput, nameInput, priceContainerInput,
                     numberOfUnitsInput, unitTypeInput, unitsPerContainerInput, shortDateInput);
             Inventory.addIngredient(perishIngredient);
-            Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/Main.fxml")));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 900, 400);
+            Scene scene = new Scene(root, 466,665);
             stage.setTitle("To Taste: Main Screen");
             stage.setScene(scene);
             stage.show();
@@ -168,9 +169,9 @@ public class AddIngredientController implements Initializable {
             NonPerishable nonPerishIngredient = new NonPerishable(idInput, nameInput, priceContainerInput,
                     numberOfUnitsInput, unitTypeInput, unitsPerContainerInput, longDateInput);
             Inventory.addIngredient(nonPerishIngredient);
-            Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/Main.fxml")));
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 900, 400);
+            Scene scene = new Scene(root, 466,665);
             stage.setTitle("To Taste: Main Screen");
             stage.setScene(scene);
             stage.show();

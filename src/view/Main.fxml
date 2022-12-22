@@ -9,15 +9,15 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane prefHeight="665.0" prefWidth="466.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ffffff00" height="245.0" layoutX="459.0" layoutY="96.0" stroke="BLACK" strokeType="INSIDE" width="421.0" />
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ffffff00" height="245.0" layoutX="18.0" layoutY="96.0" stroke="BLACK" strokeType="INSIDE" width="430.0" />
-      <Label fx:id="ingredientInventory" layoutX="44.0" layoutY="113.0" prefHeight="17.0" prefWidth="84.0" text="Ingredients">
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ffffff00" height="245.0" layoutX="14.0" layoutY="88.0" stroke="BLACK" strokeType="INSIDE" width="430.0" />
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ffffff00" height="245.0" layoutX="14.0" layoutY="353.0" stroke="BLACK" strokeType="INSIDE" width="430.0" />
+      <Label fx:id="ingredientInventory" layoutX="40.0" layoutY="370.0" prefHeight="17.0" prefWidth="84.0" text="Ingredients">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <TableView fx:id="inventoryIngredientTable" layoutX="44.0" layoutY="137.0" prefHeight="155.0" prefWidth="385.0">
+      <TableView fx:id="inventoryIngredientTable" layoutX="40.0" layoutY="394.0" prefHeight="155.0" prefWidth="385.0">
         <columns>
           <TableColumn fx:id="ingredientName" prefWidth="122.0" text="Ingredient Name" />
             <TableColumn fx:id="ingredientNumberOfUnits" prefWidth="141.0" text="Usage In All Recipes" />
@@ -27,14 +27,14 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button layoutX="257.0" layoutY="301.0" onAction="#onAddIngredientClick" prefHeight="25.0" prefWidth="54.0" text="Add" />
-      <Button layoutX="318.0" layoutY="301.0" onAction="#onModifyIngredientClick" text="Modify" />
-      <Button layoutX="378.0" layoutY="301.0" onAction="#onDeleteIngredientClick" text="Delete" />
-      <Label fx:id="recipeInventory" layoutX="475.0" layoutY="113.0" prefHeight="17.0" prefWidth="84.0" text="Recipes">
+      <Button layoutX="254.0" layoutY="558.0" onAction="#onAddIngredientClick" prefHeight="25.0" prefWidth="54.0" text="Add" />
+      <Button layoutX="314.0" layoutY="558.0" onAction="#onModifyIngredientClick" text="Modify" />
+      <Button layoutX="374.0" layoutY="558.0" onAction="#onDeleteIngredientClick" text="Delete" />
+      <Label fx:id="recipeInventory" layoutX="40.0" layoutY="106.0" prefHeight="17.0" prefWidth="84.0" text="Recipes">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <TableView fx:id="inventoryRecipeTable" layoutX="475.0" layoutY="137.0" prefHeight="155.0" prefWidth="385.0">
+      <TableView fx:id="inventoryRecipeTable" layoutX="40.0" layoutY="130.0" prefHeight="155.0" prefWidth="385.0">
          <columns>
             <TableColumn fx:id="recipeName" prefWidth="98.0" text="Recipe Name" />
             <TableColumn fx:id="recipeServings" prefWidth="100.0" text="Servings in Recipe" />
@@ -44,22 +44,22 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button layoutX="689.0" layoutY="301.0" onAction="#onAddRecipeClick" prefHeight="25.0" prefWidth="54.0" text="Add" />
-      <Button layoutX="749.0" layoutY="301.0" onAction="#onModifyRecipeClick" text="Modify" />
-      <Button layoutX="809.0" layoutY="301.0" onAction="#onDeleteRecipeClick" text="Delete" />
-      <TextField fx:id="queryIngredients" layoutX="173.0" layoutY="109.0" onAction="#ingredientSearchActivate" prefHeight="25.0" prefWidth="256.0" promptText="search by ingredient name" />
-      <TextField fx:id="queryRecipes" layoutX="604.0" layoutY="109.0" onAction="#recipeSearchActivate" prefHeight="25.0" prefWidth="256.0" promptText="search by recipe name or flavor descriptions" />
-      <Label fx:id="titleLabel" layoutX="18.0" layoutY="34.0" prefHeight="25.0" prefWidth="84.0" text="To Taste ">
+      <Button layoutX="254.0" layoutY="294.0" onAction="#onAddRecipeClick" prefHeight="25.0" prefWidth="54.0" text="Add" />
+      <Button layoutX="314.0" layoutY="294.0" onAction="#onModifyRecipeClick" text="Modify" />
+      <Button layoutX="374.0" layoutY="294.0" onAction="#onDeleteRecipeClick" text="Delete" />
+      <TextField fx:id="queryIngredients" layoutX="169.0" layoutY="366.0" onAction="#ingredientSearchActivate" prefHeight="25.0" prefWidth="256.0" promptText="search by ingredient name" />
+      <TextField fx:id="queryRecipes" layoutX="169.0" layoutY="102.0" onAction="#recipeSearchActivate" prefHeight="25.0" prefWidth="256.0" promptText="search by recipe name or flavor descriptions" />
+      <Label fx:id="titleLabel" layoutX="18.0" layoutY="27.0" prefHeight="25.0" prefWidth="84.0" text="To Taste ">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button layoutX="825.0" layoutY="353.0" mnemonicParsing="false" onAction="#onExitButtonClick" prefHeight="25.0" prefWidth="42.0" text="Exit" />
-      <Label fx:id="errorRecipeBox" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="475.0" layoutY="301.0" prefHeight="25.0" prefWidth="197.0" textAlignment="RIGHT" textFill="RED" />
-      <Label layoutX="18.0" layoutY="61.0" prefHeight="17.0" prefWidth="357.0" text="A Simple Recipe and Ingredient Management System by Ian Davis" />
-      <Label fx:id="errorIngredientBox" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="44.0" layoutY="301.0" prefHeight="25.0" prefWidth="197.0" textAlignment="RIGHT" textFill="RED" />
-      <Button layoutX="727.0" layoutY="353.0" mnemonicParsing="false" onAction="#onSaveButtonClick" prefHeight="25.0" prefWidth="42.0" text="Save" />
-      <Button layoutX="776.0" layoutY="353.0" mnemonicParsing="false" onAction="#onLoadButtonClick" text="Load" />
-      <Button layoutX="18.0" layoutY="353.0" mnemonicParsing="false" onAction="#onClearButtonClick" prefHeight="25.0" prefWidth="111.0" text="Clear Inventory" />
+      <Button layoutX="403.0" layoutY="606.0" mnemonicParsing="false" onAction="#onExitButtonClick" prefHeight="25.0" prefWidth="42.0" text="Exit" />
+      <Label fx:id="errorRecipeBox" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="40.0" layoutY="294.0" prefHeight="25.0" prefWidth="197.0" textAlignment="RIGHT" textFill="RED" />
+      <Label layoutX="18.0" layoutY="54.0" prefHeight="17.0" prefWidth="357.0" text="A Simple Recipe and Ingredient Management System by Ian Davis" />
+      <Label fx:id="errorIngredientBox" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="40.0" layoutY="558.0" prefHeight="25.0" prefWidth="197.0" textAlignment="RIGHT" textFill="RED" />
+      <Button layoutX="305.0" layoutY="606.0" mnemonicParsing="false" onAction="#onSaveButtonClick" prefHeight="25.0" prefWidth="42.0" text="Save" />
+      <Button layoutX="354.0" layoutY="606.0" mnemonicParsing="false" onAction="#onLoadButtonClick" text="Load" />
+      <Button layoutX="14.0" layoutY="606.0" mnemonicParsing="false" onAction="#onClearButtonClick" prefHeight="25.0" prefWidth="111.0" text="Clear Inventory" />
    </children>
 </AnchorPane>

@@ -19,6 +19,7 @@ import model.Recipe;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -42,8 +43,8 @@ public class ModifyRecipeController implements Initializable {
     private static String recipeCostInput;
     private static String flavorTagsInput;
     private static ObservableList<Ingredient> tempRequiredIngredients = FXCollections.observableArrayList();
-    private static ObservableList<Ingredient> initialTempRequiredIngredients = FXCollections.observableArrayList();
-    private static ObservableList<Ingredient> displayRequiredIngredients = FXCollections.observableArrayList();
+    private static final ObservableList<Ingredient> initialTempRequiredIngredients = FXCollections.observableArrayList();
+    private static final ObservableList<Ingredient> displayRequiredIngredients = FXCollections.observableArrayList();
 
     public Label errorBox;
 
@@ -90,21 +91,19 @@ public class ModifyRecipeController implements Initializable {
         }
         tempRequiredIngredients.addAll(initialTempRequiredIngredients);
 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/Main.fxml")));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 900, 400);
+        Scene scene = new Scene(root, 466,665);
         stage.setTitle("To Taste: Main Screen");
         stage.setScene(scene);
         stage.show();
     }
 
-    public void onAddIngredientClick(ActionEvent actionEvent) throws IOException {
+    public void onAddIngredientClick() throws IOException {
         Ingredient selectedIngredient = allIngredientsTable.getSelectionModel().getSelectedItem();
 
         if(selectedIngredient == null)
             return;
-
-        // we can add the ingredient to the Inventory here for that simplistic add ingredient option
 
         tempRequiredIngredients.add(selectedIngredient);
         double tempRecipeCost = Double.parseDouble(recipeCostBox.getText(1, 5)) +
@@ -115,7 +114,7 @@ public class ModifyRecipeController implements Initializable {
         allIngredientsTable.refresh();
     }
 
-    public void onRemoveRequiredIngredientClick(ActionEvent actionEvent) {
+    public void onRemoveRequiredIngredientClick() {
         Ingredient selectedIngredient = requiredIngredientsTable.getSelectionModel().getSelectedItem();
 
         if(selectedIngredient == null)
@@ -181,9 +180,9 @@ public class ModifyRecipeController implements Initializable {
         }
 
         Inventory.updateRecipe(recipeNameInput, recipe);
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/Main.fxml")));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 900, 400);
+        Scene scene = new Scene(root, 466,665);
         stage.setTitle("To Taste: Main Screen");
         stage.setScene(scene);
         stage.show();

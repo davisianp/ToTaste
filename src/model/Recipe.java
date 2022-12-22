@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 import java.util.Objects;
 
 public class Recipe {
-    private ObservableList<Ingredient> requiredIngredients = FXCollections.observableArrayList();
+    private final ObservableList<Ingredient> requiredIngredients = FXCollections.observableArrayList();
     private String recipeName;
     private double recipeCost;
     private int recipeServings;

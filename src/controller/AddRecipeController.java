@@ -17,6 +17,7 @@ import model.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -37,7 +38,7 @@ public class AddRecipeController implements Initializable {
     public Label errorBox;
 
     private final ObservableList<Ingredient> tempRequiredIngredients = FXCollections.observableArrayList();
-    private static ObservableList<Ingredient> displayRequiredIngredients = FXCollections.observableArrayList();
+    private static final ObservableList<Ingredient> displayRequiredIngredients = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -56,15 +57,15 @@ public class AddRecipeController implements Initializable {
     }
 
     public void onCancelClick(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/Main.fxml")));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 900, 400);
+        Scene scene = new Scene(root, 466,665);
         stage.setTitle("To Taste: Main Screen");
         stage.setScene(scene);
         stage.show();
     }
 
-    public void onAddIngredientClick(ActionEvent actionEvent) {
+    public void onAddIngredientClick() {
         Ingredient selectedIngredient = allIngredientsTable.getSelectionModel().getSelectedItem();
 
         if(selectedIngredient == null)
@@ -78,7 +79,7 @@ public class AddRecipeController implements Initializable {
         recipeCostBox.setText("$" + String.format("%.2f", tempRecipeCost));
     }
 
-    public void onRemoveRequiredIngredientClick(ActionEvent actionEvent) {
+    public void onRemoveRequiredIngredientClick() {
         Ingredient selectedIngredient = requiredIngredientsTable.getSelectionModel().getSelectedItem();
 
         if(selectedIngredient == null)
@@ -141,9 +142,10 @@ public class AddRecipeController implements Initializable {
         }
 
         Inventory.addRecipe(recipe);
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/Main.fxml")));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 900, 400);
+
+        Scene scene = new Scene(root, 466,665);
         stage.setTitle("To Taste: Main Screen");
         stage.setScene(scene);
         stage.show();
